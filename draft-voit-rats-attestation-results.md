@@ -52,6 +52,24 @@ TBD
 
 --- middle
 
+# Introduction
+
+TBD
+
+# Terminology
+
+{::boilerplate bcp14}
+
+# Privacy Considerations
+
+Privacy Considerations Text
+
+# Security Considerations
+
+Security Considerations Text
+
+# IANA Considerations
+
 TBD
 
 --- back
