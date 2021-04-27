@@ -160,7 +160,7 @@ The following sections detail requirements for these three categories.
 Identity Evidence must be conveyed during the establishment of any trust-based relationship.
 Specific use cases will define the minimum types of identities required by a particular Relying Party.
 At minimum, a Relying Party MUST able to verify the identity of a Verifier it chooses to trust.
-This Identity Evidence will often consist of a Verifier signature aross the Attestation Results; and this signature could only have come from a key pair maintained by a trusted developer or operator of the Verifier.
+This Identity Evidence will often consist of a Verifier signature across the Attestation Results; and this signature could only have come from a key pair maintained by a trusted developer or operator of the Verifier.
 Also at minimum for connectivity related relationships, each set of Attestation Results must be provably and non-reputably bound to the identity of the specific Attesting Environment.
 
 In a subset of use cases, these two pieces of Identity Evidence may be sufficient for a Relying Party to successfully meet the criteria for its Appraisal Policy for Attestation Results.
@@ -244,7 +244,7 @@ Following are the set of Trustworthiness Claims defined within this document:
 | source-data-integrity | A Verifier has appraised that the Attester is operating upon data inputs from an external Attester having a Trustworthiness Vector with no less than the current Vector. | affirming |
 
 Each type of Attesting Environment MUST be able to support one or more of the set of affirming Trustworthiness Claims listed above.
-Additional Trustworthiness Claims may be defined in subsequent documents, but the goal is to minimize these Trustworthiness Claims to just Verifier appaisals which are directly actionable by the Relying Party.
+Additional Trustworthiness Claims may be defined in subsequent documents, but the goal is to minimize these Trustworthiness Claims to just Verifier appraisals which are directly actionable by the Relying Party.
 
 ### Trustworthiness Vector
 
@@ -306,7 +306,7 @@ time(EG')(4)------AR-augmented Evidence----------------->|
 ~~~
 {: #interactions title="Interaction Model"}
 
-{{interactions}} assumes that some form of time interval tracking is possible between the Verifer PoF and Relying Party PoF.
+{{interactions}} assumes that some form of time interval tracking is possible between the Verifier PoF and Relying Party PoF.
 However, there is a simplified case that does not require a Relying Party's PoF.
 In that second variant, the Relying Party trusts that the Attester cannot be meaningfully changed from the outside during that interval.
 Based on that assumption, the Relying Party PoF can be safely omitted.
@@ -321,7 +321,7 @@ In essence, an Attester has to be able to provide all of the mandatory affirming
 More details on each interaction step are as follows.
 The numbers used match to the numbered steps in {{interactions}}:
 
-1.  An Attester sends Evidence which is provably fresh to Verifier A at time(EG).  Freshness from the perspective of Verifer A MAY be established with Verifier PoF such as a nonce.
+1.  An Attester sends Evidence which is provably fresh to Verifier A at time(EG).  Freshness from the perspective of Verifier A MAY be established with Verifier PoF such as a nonce.
 
 2.  Verifier A appraises (1), then sends the following items back to that Attester within Attestation Results:
 
@@ -347,7 +347,7 @@ The numbers used match to the numbered steps in {{interactions}}:
     7. Assemble the Verifier B Trustworthiness Vector
         1. Copy Verifier A Trustworthiness Vector to Verifier B Trustworthiness Vector
         2. Add implicit Trustworthiness Claims inherent to the type of TEE.
-        3. Prune any unbelieveable Trustworthiness Claims
+        3. Prune any unbelievable Trustworthiness Claims
         4. Prune any Trustworthiness Claims the Relying Party doesn't accept from this Verifier.
 
 6. The Relying Party takes action based on Verifier B's appraised Trustworthiness Vector:
@@ -357,7 +357,7 @@ The numbers used match to the numbered steps in {{interactions}}:
 
 As link layer protocols re-authenticate, steps (1) to (2) and steps (3) to (6) will independently refresh.  This allows the Trustworthiness of Attester to be continuously re-appraised.
 
-Additionally, it will be common that each device on either side of a connection will want to attest the other.  This will be a process known as multual-attestation.   To support this, the process listed above may be run independently on each side of the connection.
+Additionally, it will be common that each device on either side of a connection will want to attest the other.  This will be a process known as mutual-attestation.   To support this, the process listed above may be run independently on each side of the connection.
 
 # Privacy Considerations
 
