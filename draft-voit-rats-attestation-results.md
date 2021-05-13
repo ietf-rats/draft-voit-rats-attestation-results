@@ -218,8 +218,8 @@ For more see {{claim-for-TEE-types}}.
 ### Attester
 
 Per {{I-D.ietf-rats-architecture}} Figure 2, an Attester and a corresponding Attesting Environment might not share common boundaries.
-An example of such a case might be a laptop which records its security measurements within a TPM.
-In such cases, where connections are being established directly to an Attester but not to the Attesting Environment, the Verifier must include sufficient information in the Attestation Results to enable the Relying Party to have confidence that the Attester's trustworthiness is represented by Trustworthiness Claims signed by the appropriate Attesting Environment.
+One example of such a case is a laptop that records its security measurements via the protected capabilities of a TPM.
+In cases where connections are being established directly to an Attester but not to one of its Attesting Environments, a Verifier must include sufficient information in corresponding Attestation Results to enable Relying Parties to have confidence that the Attester's trustworthiness is represented via Trustworthiness Claims signed by the appropriate Attesting Environment.
 
 ### Communicating Identity
 
