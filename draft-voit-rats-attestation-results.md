@@ -343,7 +343,7 @@ Appraisal policies define the conditions and prerequisites for when an Attester 
 In essence, an Attester has to be able to provide all of the mandatory affirming Trustworthiness Claims and none of the disqualifying detracting Trustworthiness Claims.
 
 More details on each interaction step are as follows.
-The numbers used match to the numbered steps in {{interactions}}:
+The numbers used in this sequence match to the numbered steps in {{interactions}}:
 
 1.  An Attester sends Evidence which is provably fresh to Verifier A at time(EG).
 Freshness from the perspective of Verifier A MAY be established with Verifier PoF such as a nonce.
@@ -387,11 +387,15 @@ Jump to step (6.1).
      3. Disallow any information exchange into a Relying Party context for which that Verifier B appraised Trustworthiness Vector is not qualified.
 
 As link layer protocols re-authenticate, steps (1) to (2) and steps (3) to (6) will independently refresh.
-This allows the Trustworthiness of Attester to be continuously re-appraised.
+In general, there are two types of triggers that trigger a refresh of Evidence generation (1), Attestation Result generation (2), and in consequence AR-augmented Evidence generation (4):
+1. live-cycle events, e.g. a change to an Authentication Secret of the Attester or an update of a software component
+2. uptime-cycle events, e.g. a hard reset of a composite device or a re-initialization of a TEE.
+3. authentication-cycle events, e.g. a link-layer interface resets or new TLS session is spawned.
+Appropriate re-generation of fresh Evidence, fresh Attestation Results, and fresh AR-augmented Evidence allows the trustworthiness of an Attester to be continuously re-appraised.
 
-Additionally, it will be common that each device on either side of a connection will want to attest the other.
-This will be a process known as mutual-attestation.
-To support this, the process listed above may be run independently on each side of the connection.
+Additionally, it is common that each device on either side of a connection will requires fresh remote attestation of its corresponding peer.
+This process is known as mutual-attestation.
+To support mutual-attestation, the process listed above may be run independently on each side of the connection.
 
 # Privacy Considerations
 
