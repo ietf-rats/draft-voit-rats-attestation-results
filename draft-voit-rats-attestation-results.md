@@ -66,7 +66,15 @@ informative:
     target: https://www.trustedcomputinggroup.org/wp-content/uploads/TPM_Keys_for_Platform_Identity_v1_0_r3_Final.pdf
     title: "TPM Keys for Platform Identity for TPM 1.2"
     date: 2015-08
-
+  SGX:
+    target:   https://software.intel.com/content/dam/develop/external/us/en/documents/intel-sgx-support-for-third-party-attestation-801017.pdf
+    title: "Supporting Third Party Attestation for Intel SGX with Intel Data Center Attestation Primitives"
+    date: 2017  
+  802.1AR:
+    target: https://ieeexplore.ieee.org/document/8423794
+    title: "802.1AR: Secure Device Identity"
+    date: 2018-08-02   
+  I-D.tschofenig-rats-psa-token: PSA
 
 --- abstract
 
@@ -196,10 +204,10 @@ For the Attesting Environment identity, there MUST exist a chain of trust ultima
 It is upon this root of trust that unique, non-repudiable identities may be founded.
 Example attested identities may include:
 
-* a type of hardware chip used for the Attesting Environment
-* a specific instance of a running Attesting Environment
-* a software build executing within an Attesting Environment
-* the developer(s) responsible for the code executing within an Attesting Environment
+* a type of hardware chip used for the Attesting Environment (e.g., TPM2.0)
+* a unique instance of a running Attesting Environment (e.g., LDevID {{802.1AR}}, Implementation ID {{-PSA}})
+* a software build executing within an Attesting Environment (e.g., MRSIGNER {{SGX}})
+* the developer(s) responsible for the code executing within an Attesting Environment (e.g., MRSIGNER {{SGX}})
 
 This document only defines the domain of the first of these four identities.
 The reason the first is especially important in this document's context is that each type of Attesting Environment might support a different set of Trustworthiness Claims.
@@ -209,7 +217,8 @@ For more see {{claim-for-TEE-types}}.
 
 ### Attester
 
-Per {{I-D.ietf-rats-architecture}} Section 3.3, an Attester and a corresponding Attesting Environment might not share common boundaries.
+Per {{I-D.ietf-rats-architecture}} Figure 2, an Attester and a corresponding Attesting Environment might not share common boundaries.
+An example of such a case might be a laptop which records its security measurements within a TPM.
 In such cases, where connections are being established directly to an Attester but not to the Attesting Environment, the Verifier must include sufficient information in the Attestation Results to enable the Relying Party to have confidence that the Attester's trustworthiness is represented by Trustworthiness Claims signed by the appropriate Attesting Environment.
 
 ### Communicating Identity
@@ -220,11 +229,11 @@ Any of the above identities may be needed to be established by the Relying Party
 
 The mechanism for communicating the Attesting Environment identity (and if it is different, the Attester identity <!--Henk(old): there is a deterministic relationship here, see AuthSecID in interaction models -->) may be either implicit or explicit within an instance of Attestation Results.
 An example of explicit communication would be to include the following Identity Evidence directly in the Attestation Results: a unique identifier for an Attesting Environment, the name of a key which can be provably associated with that unique identifier, and the set of Attestation Results are signed using that key.
-An example of implicit communication would be to include the following Identity Evidence: a signature which has been made across the Attestation Results.
-It would be then up to the Relying Party's Appraisal Policy for Attestation Results to verify that this signature could only have come from an entity having access to the associated private key.
+An example of implicit communication would be to include the following Identity Evidence: a signature which has been made across the Verifier's Attestation Results.
+It would be then up to the Relying Party's Appraisal Policy for Attestation Results to verify that this signature could only have come from an Attesting Environment having access to a specific private key.
 
 Note that proving identity also requires some element of freshness be embedded within a signed portion of the Attestation Results.
-This element of freshness significantly reduces the identity spoofing risks from a replay attack.
+This element of freshness reduces the identity spoofing risks from a replay attack.
 
 {: #vector-section}
 ## Trustworthiness Claims
@@ -253,9 +262,9 @@ Following are the set of Trustworthiness Claims defined within this document:
 | file-system-anomaly | A Verifier has found a passively stored file on an Attester which should not be present | detracting |
 | config-secure | A Verifier has appraised an Attester's configuration, and has found no security issues | affirming |
 | config-insecure | A Verifier has appraised an Attester's configuration, and has found security issues which should be addressed | detracting |
-| runtime-confidential | A Verifier has appraised that an Attester is opaque to the device operator.
+| runtime-confidential | A Verifier has appraised that an Attester's executing functionality opaque to the operating system and any virtual machine manager.
 See O.RUNTIME_CONFIDENTIALITY from {{GP-TEE-PP}} | affirming |
-| isolation | A Verifier has appraised that an Attester has both execution and storage space which is inaccessible from the spaces of any other application or Attester.
+| isolation | A Verifier has appraised that an Attester has both execution and storage space which is inaccessible from any other parallel application running on the Attester's physical device.
 See O.TA_ISOLATION from {{GP-TEE-PP}} | affirming |
 | secure-storage | A Verifier has appraised that an Attester has a Trusted Execution Environment which encrypts persistent storage using keys unavailable outside protected hardware.
 Protections must meet the capabilities of {{OMTP-ATE}} Section 5, but need not be hardware tamper resistant. | affirming |
@@ -270,14 +279,15 @@ Multiple Trustworthiness Claims may be asserted about an Attesting Environment a
 The set of Trustworthiness Claims inserted into an instance of Attestation Results by a Verifier is known as a Trustworthiness Vector.
 The order of Claims in the vector is NOT meaningful.
 A Trustworthiness Vector with no Trustworthiness Claims (i.e., a null Trustworthiness Vector) is a valid construct.
-In this case, the Verifier is making no affirming or detracting Claims.
+In this case, the Verifier is making no affirming or detracting Trustworthiness Claims but is confirming that a appraisal has been made.
 
 ### Trustworthiness Vector for a type of Attesting Environment
 
 Some Trustworthiness Claims are implicit based on the underlying type of Attesting Environment.
+For example, a validated MRSIGNER identity can be present where the underlying {{SGX}} hardware is 'hw-authentic'.
 Where such implicit Trustworthiness Claims exist, they do not have to be explicitly included in the Trustworthiness Vector.
 However these implicit Trustworthiness Claims SHOULD be considered as being present by the Relying Party.
-(In other words if a Trustworthiness Claim is automatically supported as a result of coming from a specific type of TEE, that claim need not be redundantly articulated.)
+Another way of saying this is if a Trustworthiness Claim is automatically supported as a result of coming from a specific type of TEE, that claim need not be redundantly articulated. Such implicit Trustworthiness Claims can be seen in the tables within {{SGX-claims}} and {{TrustZone-claims}}.
 
 Additionally, there are some Trustworthiness Claims which cannot be adequately supported by an Attesting Environment.
 For example, it would be difficult for an Attester that includes only a TPM (and no other TEE) from ever having a Verifier appraise support for 'runtime-confidential'.
@@ -293,9 +303,10 @@ Example mappings for SGX, Trustzone, and TPMs can be seen in {{claim-for-TEE-typ
 
 (Work needed in this Section. The intent is that all freshness mechanisms of {{-rats-arch}}, Section 20 will be supported.)
 A Relying Party will care about the recentness of specific Trustworthiness Claims.
-And a Relying Party will often track when there is an Expiry of Verifier Confidence for the Trustworthiness Vector itself.
-With connectivity related Attestation Results, sometimes reboot will reset various Trustworthiness Claims.
-In this case you don't have to worry about seeing the reboot itself as connectivity reestablishment will refresh the recentness timers.
+And a Relying Party will often track when there is an expiry of Verifier Confidence for the Trustworthiness Vector itself.
+With connectivity related Attestation Results, if there's a reboot which resets connectivity, it will clear the Trustworthiness Claims. 
+Re-establishing the connection will provide new Trustworthiness Claims without waiting for an freshness expiry to occur.
+In this case you don't have to worry about the reboot installing untrustworthy software as connectivity reestablishment will refresh both the Trustworthiness Claims and the recentness timers.
 
 # Connectivity Model
 
@@ -340,7 +351,7 @@ In the first variant illustrated in {{interactions}}, a Verifier B is often impl
 In these cases, the role Relying Party and the role Verifier are collapsed in one entity.
 As a result, the entity can appraise both the Attestation Result parts as well as the Evidence parts of AR-augmented Evidence to determine whether an Attester qualifies for connection to the Relying Party's resources.
 Appraisal policies define the conditions and prerequisites for when an Attester qualifies for connection.
-In essence, an Attester has to be able to provide all of the mandatory affirming Trustworthiness Claims and none of the disqualifying detracting Trustworthiness Claims.
+In essence, an Attester has to be able to provide all of the mandatory affirming Trustworthiness Claims needed by a Relying Party's Appraisal Policy for Attestation Results, and none of the disqualifying detracting Trustworthiness Claims.
 
 More details on each interaction step are as follows.
 The numbers used in this sequence match to the numbered steps in {{interactions}}:
@@ -387,11 +398,12 @@ Jump to step (6.1).
      3. Disallow any information exchange into a Relying Party context for which that Verifier B appraised Trustworthiness Vector is not qualified.
 
 As link layer protocols re-authenticate, steps (1) to (2) and steps (3) to (6) will independently refresh.
-In general, there are two types of triggers that trigger a refresh of Evidence generation (1), Attestation Result generation (2), and in consequence AR-augmented Evidence generation (4):
-1. live-cycle events, e.g. a change to an Authentication Secret of the Attester or an update of a software component
-2. uptime-cycle events, e.g. a hard reset of a composite device or a re-initialization of a TEE.
-3. authentication-cycle events, e.g. a link-layer interface resets or new TLS session is spawned.
-Appropriate re-generation of fresh Evidence, fresh Attestation Results, and fresh AR-augmented Evidence allows the trustworthiness of an Attester to be continuously re-appraised.
+This allows the Trustworthiness of Attester to be continuously re-appraised.
+There are only specific triggers which will refresh Evidence generation (1), Attestation Result generation (2), and in consequence AR-augmented Evidence generation (4):
+
+* live-cycle events, e.g. a change to an Authentication Secret of the Attester or an update of a software component
+* uptime-cycle events, e.g. a hard reset of a composite device or a re-initialization of a TEE.
+* authentication-cycle events, e.g. a link-layer interface resets or new TLS session is spawned.
 
 Additionally, it is common that each device on either side of a connection will requires fresh remote attestation of its corresponding peer.
 This process is known as mutual-attestation.
@@ -417,7 +429,7 @@ See Body.
 The following is a table which shows what Claims are supportable by different Attesting Environment types.
 Note that claims MAY BE implicit to an Attesting Environment type, and therefore do not have to be included in the Trustworthiness Vector to be considered as set by the Relying Party.
 
-# Supportable Trustworthiness Claims for TPMs
+## Supportable Trustworthiness Claims for TPMs
 
 Following are Trustworthiness Claims which MAY be set for a TPM based Attester.
 
@@ -478,7 +490,8 @@ End
 ~~~
 
 
-# Supportable Trustworthiness Claims for SGX Enclaves
+{: #SGX-claims}
+## Supportable Trustworthiness Claims for SGX Enclaves
 
 | Trustworthiness Claim | SGX |
 | :--- | :--- |
@@ -496,8 +509,8 @@ End
 | secure-storage | Implicit in signature |
 
 
-
-# Supportable Trustworthiness Claims for TrustZone
+{: #TrustZone-claims}
+## Supportable Trustworthiness Claims for TrustZone
 
 | Trustworthiness Claim | TrustZone |
 | :--- | :--- |
@@ -529,9 +542,10 @@ As the URI also could encode the version of the software, it might also act as a
 
 Expand the variant of {{interactions}} which requires no Relying Party PoF into its own picture.
 
-
 Rather than duplicating claim concepts for affirming vs detracting, perhaps we could collapse them and have affirming vs detracting be part of the value.
 Not collapsing complicates the test matrix.
+
+Normalization of the identity claims between different types of TEE.   E.g., does MRSIGNER plus extra loaded software = the sum of TrustZone Signer IDs for loaded components?
 
 
 # Contributors
@@ -540,6 +554,6 @@ Guy Fedorkow
 
 Email: gfedorkow@juniper.net
 
-Dave Thaler
+Dave Thaler	
 
 Email: dthaler@microsoft.com
