@@ -92,9 +92,9 @@ Additionally, where the Relying Party is interfacing with a heterogenous mix of 
 # Introduction
 
 The first paragraph of the May 2021 US Presidential Executive Order on Improving the Nation's Cybersecurity {{US Executive Order}} ends with the statement "the trust we place in our digital infrastructure should be proportional to how trustworthy and transparent that infrastructure is."  
-Later this order explores an auditable trust relationship, which is defined as an "agreed-upon relationship between two or more system elements that is governed by criteria for secure interaction, behavior, and outcomes."
+Later this order explores many aspects of trustworthiness including an auditable trust relationship, which is defined as an "agreed-upon relationship between two or more system elements that is governed by criteria for secure interaction, behavior, and outcomes."
 
-The Remote ATtestation procedureS (RATS) architecture {{-rats-arch}} provides a useful context for programmatically establishing and maintaining such relationships.
+The Remote ATtestation procedureS (RATS) architecture {{-rats-arch}} provides a useful context for programmatically establishing and maintaining such auditable trust relationships.
 Specifically, the architecture defines conceptual messages conveyed between architectural subsystems to support trustworthiness appraisal.
 A key RATS conceptual message here is the Attestation Results.
 The Attestation Results includes Verifier generated appraisals of an Attester including such information as the identity of the Attester, the security mechanisms employed on this Attester, and the Attester's current state of trustworthiness.
