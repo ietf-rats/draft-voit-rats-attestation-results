@@ -96,7 +96,7 @@ Later this order explores many aspects of trustworthiness including an auditable
 
 The Remote ATtestation procedureS (RATS) architecture {{-rats-arch}} provides a useful context for programmatically establishing and maintaining such auditable trust relationships.
 Specifically, the architecture defines conceptual messages conveyed between architectural subsystems to support trustworthiness appraisal.
-A key RATS conceptual message here is the Attestation Results.
+The RATS conceptual message used to convey evidence of trustworthiness is the Attestation Results.
 The Attestation Results includes Verifier generated appraisals of an Attester including such information as the identity of the Attester, the security mechanisms employed on this Attester, and the Attester's current state of trustworthiness.
 
 Generated Attestation Results are ultimately conveyed to one or more Relying Parties.
