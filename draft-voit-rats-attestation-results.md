@@ -401,7 +401,7 @@ As link layer protocols re-authenticate, steps (1) to (2) and steps (3) to (6) w
 This allows the Trustworthiness of Attester to be continuously re-appraised.
 There are only specific triggers which will refresh Evidence generation (1), Attestation Result generation (2), and in consequence AR-augmented Evidence generation (4):
 
-* live-cycle events, e.g. a change to an Authentication Secret of the Attester or an update of a software component
+* life-cycle events, e.g. a change to an Authentication Secret of the Attester or an update of a software component
 * uptime-cycle events, e.g. a hard reset of a composite device or a re-initialization of a TEE.
 * authentication-cycle events, e.g. a link-layer interface resets or new TLS session is spawned.
 
