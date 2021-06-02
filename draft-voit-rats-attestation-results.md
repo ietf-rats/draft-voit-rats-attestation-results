@@ -205,7 +205,7 @@ It is upon this root of trust that unique, non-repudiable identities may be foun
 Example attested identities may include:
 
 * a type of hardware chip used for the Attesting Environment (e.g., TPM2.0)
-* a unique instance of a running Attesting Environment (e.g., LDevID {{802.1AR}}, Implementation ID {{-PSA}})
+* a unique instance of a running Attesting Environment (e.g., LDevID {{802.1AR}}, Instance ID {{-PSA}})
 * a software build executing within an Attesting Environment (e.g., MRENCLAVE {{SGX}})
 * the developer(s) responsible for the code executing within an Attesting Environment (e.g., MRSIGNER {{SGX}})
 
