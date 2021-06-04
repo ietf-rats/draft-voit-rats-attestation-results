@@ -69,11 +69,11 @@ informative:
   SGX:
     target:   https://software.intel.com/content/dam/develop/external/us/en/documents/intel-sgx-support-for-third-party-attestation-801017.pdf
     title: "Supporting Third Party Attestation for Intel SGX with Intel Data Center Attestation Primitives"
-    date: 2017  
-  802.1AR:
+    date: 2017
+  IEEE802.1AR:
     target: https://ieeexplore.ieee.org/document/8423794
     title: "802.1AR: Secure Device Identity"
-    date: 2018-08-02   
+    date: 2018-08-02
   I-D.tschofenig-rats-psa-token: PSA
 
 --- abstract
@@ -205,7 +205,7 @@ It is upon this root of trust that unique, non-repudiable identities may be foun
 Example attested identities may include:
 
 * a type of hardware chip used for the Attesting Environment (e.g., TPM2.0)
-* a unique instance of a running Attesting Environment (e.g., LDevID {{802.1AR}}, Instance ID {{-PSA}})
+* a unique instance of a running Attesting Environment (e.g., LDevID {{IEEE802.1AR}}, Instance ID {{-PSA}})
 * a software build executing within an Attesting Environment (e.g., MRENCLAVE {{SGX}})
 * the developer(s) responsible for the code executing within an Attesting Environment (e.g., MRSIGNER {{SGX}})
 
@@ -304,7 +304,7 @@ Example mappings for SGX, Trustzone, and TPMs can be seen in {{claim-for-TEE-typ
 (Work needed in this Section. The intent is that all freshness mechanisms of {{-rats-arch}}, Section 20 will be supported.)
 A Relying Party will care about the recentness of specific Trustworthiness Claims.
 And a Relying Party will often track when there is an expiry of Verifier Confidence for the Trustworthiness Vector itself.
-With connectivity related Attestation Results, if there's a reboot which resets connectivity, it will clear the Trustworthiness Claims. 
+With connectivity related Attestation Results, if there's a reboot which resets connectivity, it will clear the Trustworthiness Claims.
 Re-establishing the connection will provide new Trustworthiness Claims without waiting for an freshness expiry to occur.
 In this case you don't have to worry about the reboot installing untrustworthy software as connectivity reestablishment will refresh both the Trustworthiness Claims and the recentness timers.
 
