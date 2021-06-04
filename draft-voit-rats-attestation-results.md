@@ -200,18 +200,28 @@ Additionally, the Relying Party must have confidence that the Trustworthiness Cl
 
 ### Attesting Environment
 
-For the Attesting Environment identity, there MUST exist a chain of trust ultimately bound to a hardware-based root of trust in the Attesting Environment.
+This document recognizes three general categories of Attesting Environments.
+
+1. TPM-based: A cryptoprocessor exists which continually hashes security measurements in a way which prevents an Attester from lying about measurements taken since boot (e.g., TPM2.0.)
+2. Process-based: Individual processes which has its runtime memory encrypted in a way that no other processes can read and decrypt that memory (e.g., {{SGX}} or {{-PSA}}.)
+3. VM-based: An entire Guest VM (or a set of containers within a host) have been encrypted as a unit so that the host operating system cannot read and decrypt what is executing within that VM (e.g., SEV or TDX.)
+
+Each of these three types of Attesting Environments must generate Evidence which is protected using private keys or certificates which are not accessible outside of that Attesting Environment.  
+The owner of that secret is the owner of the identity bound within the Attesting Environment.  
+Effectively this means that for any Attesting Environment identity, there will exist a chain of trust ultimately bound to a hardware-based root of trust in the Attesting Environment. 
+
 It is upon this root of trust that unique, non-repudiable identities may be founded.
 Example attested identities may include:
 
-* a type of hardware chip used for the Attesting Environment (e.g., TPM2.0)
-* a unique instance of a running Attesting Environment (e.g., LDevID {{IEEE802.1AR}}, Instance ID {{-PSA}})
-* a software build executing within an Attesting Environment (e.g., MRENCLAVE {{SGX}})
-* the developer(s) responsible for the code executing within an Attesting Environment (e.g., MRSIGNER {{SGX}})
+* a type of hardware chip used for the Attesting Environment (e.g., a cryptoprocessor supporting the TPM2.0 API)
+* a unique instance of a running Attesting Environment (e.g., LDevID {{802.1AR}}, Instance ID {{-PSA}})
+* a process running within an Attesting Environment (e.g., MRENCLAVE {{SGX}})
+* the developer(s) responsible for a process executing within an Attesting Environment (e.g., MRSIGNER {{SGX}})
+* (need an example for SEV.)
 
-This document only defines the domain of the first of these four identities.
-The reason the first is especially important in this document's context is that each type of Attesting Environment might support a different set of Trustworthiness Claims.
-Consequently, the Relying Party might require Identity Evidence which indicates of the type of Attesting Environment when it considers its Appraisal Policy for Attestation Results.
+Based on the category and implementation of the Attesting Environment, different types of identities might be exposed by an Attester. 
+And a Relying Party SHOULD ensure that and identities and Trustworthiness Claims asserted are actually capable of being supported by the underlying type of Attesting Environment.
+Consequently, the Relying Party SHOULD require Identity Evidence which indicates of the type of Attesting Environment when it considers its Appraisal Policy for Attestation Results.
 For more see {{claim-for-TEE-types}}.
 <!-- Henk: 2-4 later, because missing -->
 
