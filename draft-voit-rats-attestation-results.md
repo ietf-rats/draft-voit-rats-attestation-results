@@ -198,28 +198,56 @@ For any of these more nuanced appraisals, additional Identity Evidence or other 
 For the Verifier identity, it is important to review the chain of trust <!-- Henk(old): term not introduced, will have to introduce beforehand --> for that Verifier.
 Additionally, the Relying Party must have confidence that the Trustworthiness Claims being relied upon from the Verifier considered the chain of trust for the Attesting Environment <!-- Henk(old): more the reason to introduce the term -->.
 
-### Attesting Environment
+### Attester and Attesting Environment
 
-For the Attesting Environment identity, there MUST exist a chain of trust ultimately bound to a hardware-based root of trust in the Attesting Environment.
-It is upon this root of trust that unique, non-repudiable identities may be founded.
-Example attested identities may include:
+Per {{I-D.ietf-rats-architecture}} Figure 2, an Attester and a corresponding Attesting Environment might not share common code or even hardware boundaries.
+Consequently, an Attester implementation must ensure that any Attester Evidence which originates from outside the Attesting Environment MUST have been collected and delivered securely before any signing may occur. 
+Considering this, a Verifier must consider and include sufficient information in Attestation Results to enable a Relying Party to have confidence that the Attester's trustworthiness is represented via Trustworthiness Claims signed by the appropriate Attesting Environment.
 
-* a type of hardware chip used for the Attesting Environment (e.g., TPM2.0)
-* a unique instance of a running Attesting Environment (e.g., LDevID {{IEEE802.1AR}}, Instance ID {{-PSA}})
-* a software build executing within an Attesting Environment (e.g., MRENCLAVE {{SGX}})
-* the developer(s) responsible for the code executing within an Attesting Environment (e.g., MRSIGNER {{SGX}})
+This document recognizes three general categories of Attesters.
 
-This document only defines the domain of the first of these four identities.
-The reason the first is especially important in this document's context is that each type of Attesting Environment might support a different set of Trustworthiness Claims.
-Consequently, the Relying Party might require Identity Evidence which indicates of the type of Attesting Environment when it considers its Appraisal Policy for Attestation Results.
+1. HSM-based: A Hardware Security Module (HSM) based cryptoprocessor which continually hashes security measurements in a way which prevents an Attester from lying about measurements which have been extended into the Attesting Environment (e.g., TPM2.0.)
+2. Process-based: An individual process which has its runtime memory encrypted by an Attesting Environment in a way that no other processes can read and decrypt that memory (e.g., {{SGX}} or {{-PSA}}.)
+3. VM-based: An entire Guest VM (or a set of containers within a host) have been encrypted as a walled-garden unit by an Attesting Environment.  The result is that the host operating system cannot read and decrypt what is executing within that VM (e.g., SEV or TDX.)
+
+Each of these categories of Attesters abover will be capable of generating Evidence which is protected using private keys / certificates which are not accessible outside of the corresponding Attesting Environment.  
+The owner of these secrets is the owner of the identity which is bound within the Attesting Environment.  
+Effectively this means that for any Attester identity, there will exist a chain of trust ultimately bound to a hardware-based root of trust in the Attesting Environment. 
+It is upon this root of trust that unique, non-repudiable Attester identities may be founded.
+
+There are several types of Attester identities defined in this document.  This list is extensible:
+
+* attesting-environment-vendor: the vendor of the hardware chip used for the Attesting Environment (e.g., a primary Endorsement Key from a TPM)
+* attesting-environment-hardware: specific hardware with specific firmware from an 'attesting-environment-vendor' 
+* attesting-environment-hw-instance: a unique deployed instance of 'attesting-environment-hardware' (e.g., an LDevID {{802.1AR}})
+* developer: the organizational unit responsible for a process executing within an Attester (e.g., MRSIGNER {{SGX}})
+* process: a process running within an Attester (e.g., MRENCLAVE {{SGX}})
+* build-integrator: the organizational unit responsible for a particular software bill-of-materials.
+* build-instance: a unique instance of a running Attesting Environment (e.g., an Instance ID {{-PSA}}, or a hash which represents a set of software loaded since boot (e.g., TPM based integrity verification.))
+* (need to map SEV into above.)
+
+Based on the category of the Attesting Environment, different types of identities might be exposed by an Attester.
+
+
+| Attester Identity type | Process-based | VM-based | HSM-based |
+| :--- | :--- | :--- | :--- |
+| attesting-environment-vendor | Mandatory | Mandatory | Mandatory |
+| attesting-environment-hardware | Mandatory | Mandatory | Mandatory |
+| attesting-environment-hw-instance  | Optional | Optional | Optional |
+| developer | Optional | Optional | n/a |
+| process | Mandatory | n/a | n/a |
+| build-integrator | n/a (?) | Optional | Optional |
+| build-instance | n/a (?) | Optional | Optional |
+
+It is expected that drafts subsequent to this specification will provide the definitions and value domains for specific identities, each of which falling within the Attester identity types listed above.
+In some cases the actual unique identities might encoded as complex structures.
+An example complex structure might be a Software Bill of Materials (SBOM).   
+
+With the identity definitions and value domains, a Relying Party will have sufficient information to ensure that the Attester identities and Trustworthiness Claims asserted are actually capable of being supported by the underlying type of Attesting Environment.
+Consequently, the Relying Party SHOULD require Identity Evidence which indicates of the type of Attesting Environment when it considers its Appraisal Policy for Attestation Results.
+
 For more see {{claim-for-TEE-types}}.
 <!-- Henk: 2-4 later, because missing -->
-
-### Attester
-
-Per {{I-D.ietf-rats-architecture}} Figure 2, an Attester and a corresponding Attesting Environment might not share common boundaries.
-One example of such a case is a laptop that records its security measurements via the protected capabilities of a TPM.
-In cases where connections are being established directly to an Attester but not to one of its Attesting Environments, a Verifier must include sufficient information in corresponding Attestation Results to enable Relying Parties to have confidence that the Attester's trustworthiness is represented via Trustworthiness Claims signed by the appropriate Attesting Environment.
 
 ### Communicating Identity
 
