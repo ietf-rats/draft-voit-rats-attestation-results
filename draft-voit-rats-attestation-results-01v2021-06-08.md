@@ -126,7 +126,7 @@ This document defines information elements for Attestation Results in a way whic
 ## Terminology
 
 The following terms are imported from {{-rats-arch}}:
-Appraisal Policy for Attestation Results, Attester, Attesting Environment, Claims, Evidence, Relying Party, and Verifier.
+Appraisal Policy for Attestation Results, Attester, Attesting Environment, Claims, Evidence, Relying Party, Target Environment and Verifier.
 
 {{-rats-arch}} also describes topological patterns that illustrate the need for interoperable conceptual messages.
 The two patterns called "background-check model" and "passport model" are imported from the RATS architecture and used in this document as a reference to the architectural concepts:
@@ -154,11 +154,11 @@ Trustworthiness Vector:
 The vector is included within Attestation Results.
 
 {: #attestation-result-actions}
-# Attestation Results and Actions
+# AR Augmented Evidence and Actions
 
-When a Relying Party receives Attestation Results, it will receive them as part of a protocol from an endpoint which expects some result from this communication.
+An Attester creates AR Augmented Evidence by appending Attestation Results with supplemental Evidence. When a Relying Party receives AR Augmented Evidence, it will receive them as part of a protocol from an Attesting endpoint which expects some result from this communication.
 Upon receipt, the Relying Party will apply an Appraisal Policy for Attestation Results.
-This policy will consider the Attestation Results as well as additional information about the Attester and Verifier when determining what action to take.
+This policy will consider both the Attestation Results as well as additional information about the Attester within the AR Agumented Evidence the when determining what action to take.
 
 ## Attestation Results for Secure Interactions
 
@@ -183,12 +183,13 @@ The following sections detail requirements for these three categories.
 ## Non-repudiable Identity
 
 Identity Evidence must be conveyed during the establishment of any trust-based relationship.
-Specific use cases will define the minimum types of identities required by a particular Relying Party.
+Specific use cases will define the minimum types of identities required by a particular Relying Party as it evaluates AR-Augmented Evidence.
 At a bare minimum, a Relying Party MUST start with the ability to verify the identity of a Verifier it chooses to trust.
 Attester identities may then be acquired through signed communications with the Verifier identity and/or the pre-provisioning Attester public keys in the Attester.
 
-During the Remote Attestation process, the Verifier's identity will be established with a Relying Party via a Verifier signature across Evidence which includes recent Attestation Results. This Verifier identity could only have come from a key pair maintained by a trusted developer or operator of the Verifier.
-Additionally, each set of Attestation Results must be provably and non-reputably bound to the identity of the original Attesting Environment which was evaluated by the Verifier.  This will be accomplished via an Attesting Environment signature across the Verifier signed Attestation Results.  And these Verifier signed Attestation Results MUST include sufficient Identity Evidence to ensure that this outer Attesting Environment signature refers to the same Attesting Environment appraised by the Verifier.
+During the Remote Attestation process, the Verifier's identity will be established with a Relying Party via a Verifier signature across recent Attestation Results. This Verifier identity could only have come from a key pair maintained by a trusted developer or operator of the Verifier.
+
+Additionally, each set of AR Augmented Evidence must be provably and non-reputably bound to the identity of the original Attesting Environment which was evaluated by the Verifier.  This will be accomplished via two items.  First the Verifier signed Attestation Results MUST include sufficient Identity Evidence to ensure that this Attesting Environment signature refers to the same Attesting Environment appraised by the Verifier.  Second, an Attesting Environment signature which includes the Verifier signature of the Attestation Results MUST also be included.
 
 In a subset of use cases, these two pieces of Identity Evidence may be sufficient for a Relying Party to successfully meet the criteria for its Appraisal Policy for Attestation Results.
 If the use case is a connection request, a Relying Party may simply then establish a transport session with an Attester after successfully appraising verified by a Verifier.
