@@ -595,6 +595,6 @@ Guy Fedorkow
 
 Email: gfedorkow@juniper.net
 
-Dave Thaler	
+Dave Thaler
 
 Email: dthaler@microsoft.com
