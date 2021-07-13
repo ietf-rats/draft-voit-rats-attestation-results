@@ -1,0 +1,682 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2021-07-13T00:54:21.482301+00:00",
+  "repo": "ietf-rats/draft-voit-rats-attestation-results",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "MDExOlB1bGxSZXF1ZXN0NjMxNDY4NDE0",
+      "title": "proposal to add live-cycle, uptime-cycle, and authentication-cycle event triggers",
+      "url": "https://github.com/ietf-rats/draft-voit-rats-attestation-results/pull/1",
+      "state": "MERGED",
+      "author": "henkbirkholz",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Names or location of concept in text might still be off. Please comment & bash.",
+      "createdAt": "2021-05-06T14:00:50Z",
+      "updatedAt": "2021-05-13T19:10:54Z",
+      "baseRepository": "ietf-rats/draft-voit-rats-attestation-results",
+      "baseRefName": "main",
+      "baseRefOid": "dc97ddd75ec90618c76fb2adbd8356f5ced9e197",
+      "headRepository": "ietf-rats/draft-voit-rats-attestation-results",
+      "headRefName": "triggers-and-cycles",
+      "headRefOid": "4a3cf55ab9cc33c6f35eb56cf57367d2ac730429",
+      "closedAt": "2021-05-13T19:10:54Z",
+      "mergedAt": "2021-05-13T19:10:53Z",
+      "mergedBy": "ericvoit",
+      "mergeCommit": {
+        "oid": "84051b5670df38a61e95166c549a7685bee1d071"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjUzNDc0NDkx",
+          "commit": {
+            "abbreviatedOid": "4a3cf55"
+          },
+          "author": "ericvoit",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-05-06T14:14:42Z",
+          "updatedAt": "2021-05-06T14:14:42Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "I am not sure that not all authentication-cycle events will drive a refresh of (2)",
+              "createdAt": "2021-05-06T14:14:42Z",
+              "updatedAt": "2021-05-06T14:14:42Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjU5MjE3Njc5",
+          "commit": {
+            "abbreviatedOid": "4a3cf55"
+          },
+          "author": "ericvoit",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-05-13T19:10:30Z",
+          "updatedAt": "2021-05-13T19:10:30Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "MDExOlB1bGxSZXF1ZXN0NjQ0MTkwNDg0",
+      "title": "Comments from Guy: May-12",
+      "url": "https://github.com/ietf-rats/draft-voit-rats-attestation-results/pull/2",
+      "state": "MERGED",
+      "author": "ericvoit",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-05-13T19:15:49Z",
+      "updatedAt": "2021-06-02T19:14:01Z",
+      "baseRepository": "ietf-rats/draft-voit-rats-attestation-results",
+      "baseRefName": "main",
+      "baseRefOid": "84051b5670df38a61e95166c549a7685bee1d071",
+      "headRepository": "ietf-rats/draft-voit-rats-attestation-results",
+      "headRefName": "ericvoit-patch-1",
+      "headRefOid": "46a2b5b43c8830b01eb43d5afdbf2c3bd8a07ec8",
+      "closedAt": "2021-06-02T19:13:01Z",
+      "mergedAt": "2021-06-02T19:13:01Z",
+      "mergedBy": "ericvoit",
+      "mergeCommit": {
+        "oid": "9e80ac94331f22127419702517d8b213ae7f0d5b"
+      },
+      "comments": [
+        {
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "body": "A ref around 802.1AR seems to be broken at the moment.",
+          "createdAt": "2021-05-13T19:52:47Z",
+          "updatedAt": "2021-05-13T19:52:47Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjU5MjQyNjU5",
+          "commit": {
+            "abbreviatedOid": "e839b9d"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-05-13T19:43:39Z",
+          "updatedAt": "2021-05-13T19:43:39Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "```suggestion\r\nOne example of such a case is a laptop that records its security measurements via the protected capabilities of a TPM.\r\nIn cases where connections are being established directly to an Attester but not to one of its Attesting Environments, a Verifier must include sufficient information in corresponding Attestation Results to enable Relying Parties to have confidence that the Attester's trustworthiness is represented via Trustworthiness Claims signed by the appropriate Attesting Environment.\r\n```",
+              "createdAt": "2021-05-13T19:43:39Z",
+              "updatedAt": "2021-05-13T19:43:39Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjU5MjQ0NDc0",
+          "commit": {
+            "abbreviatedOid": "e839b9d"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-05-13T19:46:09Z",
+          "updatedAt": "2021-05-13T19:46:10Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "```suggestion\r\nAn example of implicit communication would be to include the following Identity Evidence: a signature over all Attestation Results generated by a Verifier.\r\n```",
+              "createdAt": "2021-05-13T19:46:09Z",
+              "updatedAt": "2021-05-13T19:46:10Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjU5MjQ2MjA0",
+          "commit": {
+            "abbreviatedOid": "e839b9d"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "some phrasing nits",
+          "createdAt": "2021-05-13T19:48:35Z",
+          "updatedAt": "2021-05-13T19:48:35Z",
+          "comments": []
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjU5MjY3Nzcx",
+          "commit": {
+            "abbreviatedOid": "e839b9d"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-05-13T20:17:47Z",
+          "updatedAt": "2021-05-13T20:17:47Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "```suggestion\r\n* a unique instance of a running Attesting Environment (e.g., LDevID {{802.1AR}}, Instance ID {{-PSA}})\r\n```",
+              "createdAt": "2021-05-13T20:17:47Z",
+              "updatedAt": "2021-05-13T20:17:47Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjU5MjcyMDYw",
+          "commit": {
+            "abbreviatedOid": "e839b9d"
+          },
+          "author": "ericvoit",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-05-13T20:23:43Z",
+          "updatedAt": "2021-05-13T20:23:44Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "I initially placed Instance ID there.  But further reading led me to believe that multiple Instance ID's could be loaded into one TrustZone.  Could you confirm it is 1:1 between Attesting Environment and Instance ID?    I actually expect we are going to need to build more explicit mappings of identities in this section (or the Appendices) over time.",
+              "createdAt": "2021-05-13T20:23:43Z",
+              "updatedAt": "2021-05-13T20:23:44Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjU5NTg2NjAx",
+          "commit": {
+            "abbreviatedOid": "97c2413"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-05-14T07:23:44Z",
+          "updatedAt": "2021-05-14T07:23:44Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "Implementation ID is a kind of \"class identifier\" that is common to all devices sharing the same PSA RoT implementation.  Instance ID is the unique identifier of a PSA RoT instance.",
+              "createdAt": "2021-05-14T07:23:44Z",
+              "updatedAt": "2021-05-14T07:23:44Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjU5OTIwODIy",
+          "commit": {
+            "abbreviatedOid": "97c2413"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-05-14T14:57:17Z",
+          "updatedAt": "2021-05-14T14:57:18Z",
+          "comments": [
+            {
+              "originalPosition": 124,
+              "body": "non-native question: wouldn't this be life-cycle instead? ",
+              "createdAt": "2021-05-14T14:57:17Z",
+              "updatedAt": "2021-05-14T14:57:18Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjU5OTI0MDM3",
+          "commit": {
+            "abbreviatedOid": "97c2413"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "LGTM!",
+          "createdAt": "2021-05-14T15:00:43Z",
+          "updatedAt": "2021-05-14T15:00:43Z",
+          "comments": []
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc0NTkzMTk5",
+          "commit": {
+            "abbreviatedOid": "46a2b5b"
+          },
+          "author": "ericvoit",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-06-02T19:13:45Z",
+          "updatedAt": "2021-06-02T19:13:45Z",
+          "comments": [
+            {
+              "originalPosition": 124,
+              "body": "Yes",
+              "createdAt": "2021-06-02T19:13:45Z",
+              "updatedAt": "2021-06-02T19:13:45Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "MDExOlB1bGxSZXF1ZXN0NjYwMzY3MTIy",
+      "title": "Intro which points to Biden Executive Order",
+      "url": "https://github.com/ietf-rats/draft-voit-rats-attestation-results/pull/3",
+      "state": "CLOSED",
+      "author": "ericvoit",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Per Henk's suggestion to change name and link to Biden's Executive Order",
+      "createdAt": "2021-06-02T20:22:18Z",
+      "updatedAt": "2021-06-09T17:49:31Z",
+      "baseRepository": "ietf-rats/draft-voit-rats-attestation-results",
+      "baseRefName": "main",
+      "baseRefOid": "1a429bb4e6e12848fbefcf60994376b03310cc01",
+      "headRepository": "ietf-rats/draft-voit-rats-attestation-results",
+      "headRefName": "ericvoit-patch-1",
+      "headRefOid": "a709ed1a1ce8989fb3dbca39f1e5b99b5f9b5691",
+      "closedAt": "2021-06-09T17:49:31Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "ericvoit",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Ending comments with new version 01",
+          "createdAt": "2021-06-09T17:49:31Z",
+          "updatedAt": "2021-06-09T17:49:31Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc2NDk0MDIx",
+          "commit": {
+            "abbreviatedOid": "a709ed1"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Captures the intent well!",
+          "createdAt": "2021-06-04T16:55:35Z",
+          "updatedAt": "2021-06-04T16:55:35Z",
+          "comments": []
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc3MjgzMDM5",
+          "commit": {
+            "abbreviatedOid": "a709ed1"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Just a couple of typographical nits, which however are needed to make the source compile.\r\n\r\nAlso, at L73 the `802.1AR` label should not start with a number.  Maybe prepend `IEEE-` to it.\r\n\r\nPS: I like the title change.\r\n",
+          "createdAt": "2021-06-07T11:12:57Z",
+          "updatedAt": "2021-06-07T11:57:04Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "I don't think Carsten's kdrfc likes empty spaces\r\n\r\n```suggestion\r\n  US-Executive-Order:\r\n```",
+              "createdAt": "2021-06-07T11:12:57Z",
+              "updatedAt": "2021-06-07T11:16:33Z"
+            },
+            {
+              "originalPosition": 24,
+              "body": "```suggestion\r\nThe first paragraph of the May 2021 US Presidential Executive Order on Improving the Nation's Cybersecurity {{US- Executive-Order}} ends with the statement \"the trust we place in our digital infrastructure should be proportional to how trustworthy and transparent that infrastructure is.\"  \r\n```",
+              "createdAt": "2021-06-07T11:13:12Z",
+              "updatedAt": "2021-06-07T11:16:33Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "MDExOlB1bGxSZXF1ZXN0NjYyMDg5NzE3",
+      "title": "Categorizing Attesting Environments",
+      "url": "https://github.com/ietf-rats/draft-voit-rats-attestation-results/pull/4",
+      "state": "CLOSED",
+      "author": "ericvoit",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Starting to roll in Attesting Environment types.",
+      "createdAt": "2021-06-04T21:59:35Z",
+      "updatedAt": "2021-06-07T20:41:05Z",
+      "baseRepository": "ietf-rats/draft-voit-rats-attestation-results",
+      "baseRefName": "main",
+      "baseRefOid": "21662daa72d297b9cd903774c7218b919418c9ed",
+      "headRepository": "ietf-rats/draft-voit-rats-attestation-results",
+      "headRefName": "ericvoit-patch-2",
+      "headRefOid": "51c251aea30dab0ee2abbdebd020e0e3e6e74a07",
+      "closedAt": "2021-06-07T20:41:05Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc3MjYyMzc3",
+          "commit": {
+            "abbreviatedOid": "51c251a"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-06-07T10:51:04Z",
+          "updatedAt": "2021-06-07T10:57:40Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "Maybe we should call it \"Secure Element\"-based rather than TPM? We wouldn't know where to put vTPM-based Attesting Environments (AE) otherwise (TPM-based or Process-based?)",
+              "createdAt": "2021-06-07T10:51:05Z",
+              "updatedAt": "2021-06-07T10:57:41Z"
+            },
+            {
+              "originalPosition": 11,
+              "body": "I think we also need to cover the case where the Evidence produced by the AE is not directly signed by that AE, but by another AE that has a \"trusted path\" to the first one.",
+              "createdAt": "2021-06-07T10:56:38Z",
+              "updatedAt": "2021-06-07T10:57:41Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc3MzUzOTcw",
+          "commit": {
+            "abbreviatedOid": "51c251a"
+          },
+          "author": "ericvoit",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-06-07T12:35:03Z",
+          "updatedAt": "2021-06-07T12:35:03Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "Secure Element based works for me.",
+              "createdAt": "2021-06-07T12:35:03Z",
+              "updatedAt": "2021-06-07T12:35:03Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc3MzYxNTgx",
+          "commit": {
+            "abbreviatedOid": "51c251a"
+          },
+          "author": "ericvoit",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-06-07T12:43:01Z",
+          "updatedAt": "2021-06-07T12:43:02Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "I agree that this method of packaging Evidence generated elsewhere in the system is a viable one which needs to be covered. (in fact that is what the TPM does.)  So unless I am misunderstanding, I don't think this is a new case of technology separated from the other three.  Instead it is important that an vulnerabilities which are exposed by the 'proxy' or 'MITM' function are understood and covered in the other two cases.  Agree?  If yes, we can craft some text.",
+              "createdAt": "2021-06-07T12:43:01Z",
+              "updatedAt": "2021-06-07T12:43:02Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc3Mzg5NDM4",
+          "commit": {
+            "abbreviatedOid": "51c251a"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-06-07T13:09:14Z",
+          "updatedAt": "2021-06-07T13:09:15Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "> [...] So unless I am misunderstanding, I don't think this is a new case of technology separated from the other three.\r\n\r\nAgree.  It's just a way AEs are arranged in a composite system -- a purely topological consideration.\r\n\r\n> Instead it is important that an vulnerabilities which are exposed by the 'proxy' or 'MITM' function are understood and covered in the other two cases. Agree? If yes, we can craft some text.\r\n\r\nI think what we could say is that if Evidence is not signed by the AE directly, it MUST have been collected and signed by an AE that has a \"trusted path\" with the former.  (We should characterise precisely what \"trusted path\" means.)\r\n\r\n",
+              "createdAt": "2021-06-07T13:09:15Z",
+              "updatedAt": "2021-06-07T13:09:15Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc3NDM0MTIx",
+          "commit": {
+            "abbreviatedOid": "51c251a"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-06-07T13:47:40Z",
+          "updatedAt": "2021-06-07T13:47:41Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "I'd hold-off on the Secure Element choice for now, because I am under impression that eSE, TPM, etc. are all a bit loaded terms. I'd prefer to see Hardware Security Module (HSM), as a more neutral term.",
+              "createdAt": "2021-06-07T13:47:41Z",
+              "updatedAt": "2021-06-07T13:47:41Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc3NDgyMzIz",
+          "commit": {
+            "abbreviatedOid": "51c251a"
+          },
+          "author": "ericvoit",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-06-07T14:26:40Z",
+          "updatedAt": "2021-06-07T14:26:40Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "HSM based-  Is that ok with everyone?    Honestly I wouldn't use a vTPM alone for Security Measurements, unless it was in a Secure Enclave.  I would however trust a vTPM for Secure Storage if it was bound to an HSM.",
+              "createdAt": "2021-06-07T14:26:40Z",
+              "updatedAt": "2021-06-07T14:27:10Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc3NTE5NjM3",
+          "commit": {
+            "abbreviatedOid": "51c251a"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-06-07T14:56:40Z",
+          "updatedAt": "2021-06-07T14:56:41Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "> HSM based- Is that ok with everyone?\r\n\r\nIn my experience an HSM is a big blue box on a LAN, whereas the SEs that I know have a more \"chip-py\" form factor.\r\n\r\nIn case this is not a shared perspective, I will happily adjust my mental pictures catalogue and go with HSM :-)",
+              "createdAt": "2021-06-07T14:56:41Z",
+              "updatedAt": "2021-06-07T14:56:41Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc3NTkxNDM4",
+          "commit": {
+            "abbreviatedOid": "51c251a"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-06-07T15:44:07Z",
+          "updatedAt": "2021-06-07T15:44:07Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "[now commenting in the right thread, thx for always correcting me \ud83d\ude0a]\r\n\r\nI checked with the Fraunhofer competency cluster and got this back as a counter example that aligns with Thomas' point.\r\n\r\nhttps://cpl.thalesgroup.com/encryption/hardware-security-modules\r\n\r\nThe Internet seems to disagree with itself here. Which reduces the viability of \"HSM\" here, a bit. Which... also does not make this easier.\r\n\r\nIf it is neither e(SE) nor HSM, what is it? Any other thoughts?",
+              "createdAt": "2021-06-07T15:44:07Z",
+              "updatedAt": "2021-06-07T15:44:07Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc3NTkzODkx",
+          "commit": {
+            "abbreviatedOid": "51c251a"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-06-07T15:46:22Z",
+          "updatedAt": "2021-06-07T15:46:22Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "> If it is neither e(SE) nor HSM, what is it? Any other thoughts?\r\n\r\nI'm happy to go with HSM until we find a better term.\r\n\r\n",
+              "createdAt": "2021-06-07T15:46:22Z",
+              "updatedAt": "2021-06-07T15:46:22Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc3ODY2NTQ5",
+          "commit": {
+            "abbreviatedOid": "51c251a"
+          },
+          "author": "ericvoit",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-06-07T20:40:52Z",
+          "updatedAt": "2021-06-07T20:40:52Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "I agree.  Based on above, I have rewritten the text extensively.  Take a look at the new pull request.",
+              "createdAt": "2021-06-07T20:40:52Z",
+              "updatedAt": "2021-06-07T20:40:52Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "MDExOlB1bGxSZXF1ZXN0NjYzOTAwMjQ3",
+      "title": "Update draft-voit-rats-attestation-results.md",
+      "url": "https://github.com/ietf-rats/draft-voit-rats-attestation-results/pull/5",
+      "state": "CLOSED",
+      "author": "ericvoit",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on the comments from patch 2.  Plus some new text on different types of Attester Identities",
+      "createdAt": "2021-06-07T20:42:47Z",
+      "updatedAt": "2021-06-09T17:49:13Z",
+      "baseRepository": "ietf-rats/draft-voit-rats-attestation-results",
+      "baseRefName": "main",
+      "baseRefOid": "21662daa72d297b9cd903774c7218b919418c9ed",
+      "headRepository": "ietf-rats/draft-voit-rats-attestation-results",
+      "headRefName": "ericvoit-patch-3",
+      "headRefOid": "5ca202f2f99541f39a286ad253462b1e0c3d2d32",
+      "closedAt": "2021-06-09T17:49:13Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "ericvoit",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Ending comments with new version 01",
+          "createdAt": "2021-06-09T17:49:13Z",
+          "updatedAt": "2021-06-09T17:49:13Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Njc5NTQ5MjAx",
+          "commit": {
+            "abbreviatedOid": "5ca202f"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-06-09T11:49:16Z",
+          "updatedAt": "2021-06-09T11:49:16Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\r\nConsidering this, a Verifier must take into account and include sufficient information via Attestation Results to enable a Relying Party's confidence in an Attester's trustworthiness that is represented via Trustworthiness Claims signed by the appropriate Attesting Environment.\r\n```",
+              "createdAt": "2021-06-09T11:49:16Z",
+              "updatedAt": "2021-06-09T11:49:16Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
