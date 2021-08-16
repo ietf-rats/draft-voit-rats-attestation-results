@@ -432,24 +432,25 @@ This section describes two of these ways.
 
 It is possible to for a Relying Party to follow the Background-Check Model defined in Section 5.2 of {{I-D.ietf-rats-architecture}}.
 In this case, a Relying Party will receive Attestation Results containing the Trustworthiness Vector directly from a Verifier.  
-Those Attestation Results can be used by the Relying Party in determining the appropriate treatment for interactions with the Attester.
+These Attestation Results can then be used by the Relying Party in determining the appropriate treatment for interactions with the Attester.
 
-While applicable in some cases, the utilization of the Background-Check Model without modification has potential drawbacks in others.
+While applicable in some cases, the utilization of the Background-Check Model without modification has potential drawbacks in other cases.
 These include:
 
-* Verifier scale: if the Attester has many Relying Parties, the Verifier will frequently be queried based on the same Evidence.
-* Information leak: Evidence which the Attester might consider private can be visible to the Relying Party.
+* Verifier scale: if the Attester has many Relying Parties, a Verifier appraising that Attester could be frequently be queried based on the same Evidence.
+* Information leak: Evidence which the Attester might consider private can be visible to the Relying Party.  Hiding that Evidence could devalue any resulting appraisal.
 * Latency: a Relying Party will need to wait for the Verifier to return Attestation Results before proceeding with secure interactions with the Attester.
 
 An implementer should examine these potential drawbacks before selecting this alternative.
 
 ## Attestation Result Augmented Evidence
 
-There is another alternative for the establishment and maintenance of a connection between an Attester and a Relying Party which addresses the potential drawbacks described above.
-In this alternative, Verifier signed Attestation Results are returned back to the Attester no less frequently than a known interval.
-When the Relying Party wants to understand the Attester's trustworthiness, the Attesting Environment takes the signature from the most recent AR and appends just that Evidence which may impact any of the Trustworthiness Claims in the AR.
-The Attesting Environment then signs this new Evidence and sends it along with the AR to the Relying Party.
-The Relying Party then can appraise both a recent set of AR and any supplementary Evidence which indicates whether the Attester may have changed its state of trustworthiness.
+There is another alternative for the establishment and maintenance of a connection between an Attester and a Relying Party which is not adversely impacted by the potential drawbacks described above.
+In this alternative, a Verifier evaluates an Attester and returns signed Attestation Results back to this original Attester no less frequently than a well-known interval.
+When a Relying Party wants to understand the Attester's trustworthiness, the Attesting Environment assembles the minimal set of Evidence recently generated which can be used to verify that the Attester remains in the same state of trustworthiness. 
+The Attesting Environment then appends the signature from the most recent AR as well as a Relying Party Proof-of-Freshness, and then signs the combination.
+This combination plus the most recent AR are then sent to the Relying Party as independently signed but semantically bound sets of Evidence.
+The Relying Party then can appraise these sets of Evidence and understand whether the Attester may have changed its state of trustworthiness since the AR was generated.
 
 This alternative combines the {{I-D.ietf-rats-architecture}} Sections 5.1 Passport Model and Section 5.2 Background-Check Model.
 {{interactions}} describes this flow of information. 
@@ -517,16 +518,16 @@ Freshness from the perspective of Verifier A MAY be established with Verifier Po
 This AR-augmented Evidence includes:
 
     1. The Attestation Results from (2)
-    2. Attestation Environment signing of a hash of the Attestation Results plus the proof-of-freshness from (3).
-This allows the delta of time between (2.3) and (3) to be definitively calculated by the Relying Party.
+    2. Any (optionally) new incremental Evidence from the Attesting Environment
+    3. Attestation Environment signature which spans a hash of the Attestation Results (such as the signature of (2.4)), the proof-of-freshness from (3), and (4.2).  Note: this construct allows the delta of time between (2.3) and (3) to be definitively calculated by the Relying Party.
 
 5.  On receipt of (4), the Relying Party applies its Appraisal Policy for Attestation Results.
 At minimum, this appraisal policy process must include the following:
 
-    1. Verify that (4.2) includes the nonce from (3).
+    1. Verify that (4.3) includes the nonce from (3).
     2. Use a local certificate to validate the signature (4.1).
-    3. Verify that the hash from (4.2) matches (4.1)
-    4. Use the identity of (2.1) to validate the signature of (4.2).
+    3. Verify that the hash from (4.3) matches (4.1)
+    4. Use the identity of (2.1) to validate the signature of (4.3).
     5. Failure of any steps (5.1) through (5.4) means the link does not meet minimum validation criteria, therefore appraise the link as having a null Verifier B Trustworthiness Vector.
 Jump to step (6.1).
     6. When there is large or uncertain time gap between time(EG) and time(EG'), the link should be assigned a null Verifier B Trustworthiness Vector.
@@ -545,22 +546,21 @@ Jump to step (6.1).
 
 As link layer protocols re-authenticate, steps (1) to (2) and steps (3) to (6) will independently refresh.
 This allows the Trustworthiness of Attester to be continuously re-appraised.
-There are only specific event triggers which will drive the refresh of Evidence generation (1), Attestation Result generation (2), and finally AR-augmented Evidence generation (4):
+There are only specific event triggers which will drive the refresh of Evidence generation (1), Attestation Result generation (2), or AR-augmented Evidence generation (4):
 
-* life-cycle events, e.g. a change to an Authentication Secret of the Attester or an update of a software component
-* uptime-cycle events, e.g. a hard reset of a composite device or a re-initialization of a TEE.
-* authentication-cycle events, e.g. a link-layer interface resets or new TLS session is spawned.
+* life-cycle events, e.g. a change to an Authentication Secret of the Attester or an update of a software component.
+* uptime-cycle events, e.g. a hard reset or a re-initialization of an Attester.
+* authentication-cycle events, e.g. a link-layer interface reset could result in a new (4).
 
 ## Mutual Attestation
 
-In either of the interaction models described in the section, each device on either side of a secure interaction may requires fresh remote attestation of its corresponding peer.
+In the interaction models described above, each device on either side of a secure interaction may require remote attestation of its peer.
 This process is known as mutual-attestation.
-To support mutual-attestation, either interaction model listed above may be run independently on each side of the connection.
+To support mutual-attestation, the interaction models listed above may be run independently on either side of the connection.
 
-Mutual attestation will typically occur within a single transport session, and will first occur as part of transport session establishment.
+## Transport Protocol Integration
 
-## Transport Protocols
-
+Either unidirectional attestation or mutual attestation may be supported within the protocol interactions needed for the establishment of a single transport session.
 While this document does not mandate specific transport protocols, messages containing the Attestation Results and AR Augmented Evidence can be passed within an authentication framework such the EAP protocol {{RFC5247}} over TLS {{RFC8446}}.
 
 
@@ -588,20 +588,20 @@ Note that claims MAY BE implicit to an Attesting Environment type, and therefore
 
 Following are Trustworthiness Claims which MAY be set for a HSM-based Confidential Computing Attester. (Such as a TPM.)
 
-| Trustworthiness Claim | TPM used | Method |
+| Trustworthiness Claim | Required? | Appraisal Method |
 | :--- | :--- |:--- |
 | ae-instance | Optional | Check IDevID |
-| config-security | Optional | Verifier evaluation of Attester reveals no configuration lines which expose the Attester to known security vulnerabilities. |
-| executables-loaded | Yes | Checks the PCRs for the static operating system, and for any tracked files subsequently loaded |
-| file-system | No  | Can be supported, but not with TPM backing |
-| hw-authenticity | Yes | If PCR check ok from BIOS checks, through Master Boot Record configuration |
-| runtime-confidential | n/a | TPMs do not provide a sufficient technology base for this claim. |
-| secure-storage | Minimal | Secure storage space exists and is writeable by external applications. This space would typically just be used to store keys. |
-| source-data-integrity | No | This would not be backed by the TPM |
-| target-isolation | No | This can be set only if no other applications are running on the Attester |
+| config-security | Optional | Verifier evaluation of Attester reveals no configuration lines which expose the Attester to known security vulnerabilities.  This may be done with or without the involvement of a TPM PCR. |
+| executables-loaded | Yes | Checks the TPM PCRs for the static operating system, and for any tracked files subsequently loaded |
+| file-system | No  | Can be supported, but TPM tracking is unlikely |
+| hw-authenticity | Yes | If TPM PCR check ok from BIOS checks, through Master Boot Record configuration |
+| runtime-confidential | n/a | TPMs are not recommended to provide a sufficient technology base for this Trustworthiness Claim. |
+| secure-storage | Minimal | With a TPM, secure storage space exists and is writeable by external applications. But the space is so limited that it often is used just be used to store keys. |
+| source-data-integrity | n/a | TPMs are not recommended to provide a sufficient technology base for this Trustworthiness Claim. |
+| target-isolation | Optional | In general practice, this will be hard to support.  But perhaps tracking executables loaded can be used to assert that no other applications are running on the Attester |
 
 Setting the Trustworthiness Claims may follow the following logic at the Verifier A within (2) of {{interactions}}:
-
+ 
 ~~~
 
 Start: Evidence received starts the generation of a new
@@ -624,10 +624,9 @@ Step 3: Appraise Attesting Environment identity
 Step 4: Appraise executable loaded and filesystem integrity
    if (executables-loaded <> "0") - push onto vector
    if (executables-loaded NOT "1") go to Step 6
-   if (file-system <> "0") - push onto vector
 
-Step 5: Appraise all remaining Trustworthiness Claims and set as
-        appropriate.
+Step 5: Appraise all remaining Trustworthiness Claims
+        Independently and set as appropriate.
 
 Step 6: Assemble Attestation Results, and push to Attester
 
@@ -641,21 +640,17 @@ End
 
 Following are Trustworthiness Claims which MAY be set for a process-based Confidential Computing based Attester. (Such as a SGX Enclaves and TrustZone.)
 
-| Trustworthiness Claim | Process-based |
-| :--- | :--- |
-| ae-instance-recognized | Optional |
-| ae-instance-unknown |  Optional |
-| config-insecure | Optional |
-| config-secure | Optional |
-| executables-refuted | Optional |
-| executables-verified | Optional |
-| file-system-anomaly | n/a |
-| hw-authentic | Implicit in signature |
-| hw-verification-fail | Implicit if signature not ok |
-| runtime-confidential | Implicit in signature |
-| target-isolation | Implicit in signature |
-| secure-storage | Implicit in signature |
-| source-data-integrity | Optional |
+| Trustworthiness Claim | Required? | Appraisal Method |
+| :--- | :--- |:--- |
+| ae-instance | Optional | Internally available in TEE.  But keys might not be known/exposed to the Relying Party by the Attesting Environment.   |
+| config-security | Optional | If done, this is at the Application Layer.  Plus each process needs it own protection mechanism as the protection is limited to the process itself.   |
+| executables-loaded | Optional | Internally available in TEE.  But keys might not be known/exposed to the Relying Party by the Attesting Environment.  |
+| file-system | Optional | Can be supported by application, but process-based CC is not a sufficient technology base for this Trustworthiness Claim. |
+| hw-authenticity | Implicit in signature | At least the TEE is protected here. Other elements of the system outside of the TEE might need additional protections is used by the application process.  |
+| runtime-confidential | Implicit in signature |  From the TEE  |
+| secure-storage | Implicit in signature | Although the application must assert that this function is used by the code itself.  |
+| source-data-integrity | Optional | Will need to be supported by application code  |
+| target-isolation | Implicit in signature | At least the TEE is protected here. Other elements of the system outside of the TEE might need additional protections is used by the application process.  |
 
 
 {: #VM-based-claims}
@@ -663,21 +658,18 @@ Following are Trustworthiness Claims which MAY be set for a process-based Confid
 
 Following are Trustworthiness Claims which MAY be set for a VM-based Confidential Computing based Attester. (Such as SEV, TDX, ACCA, SEV-SNP.)
 
-| Trustworthiness Claim | Process-based |
-| :--- | :--- |
-| ae-instance-recognized | Optional |
-| ae-instance-unknown |  Optional |
-| config-insecure | Optional |
-| config-secure | Optional |
-| executables-refuted | Optional |
-| executables-verified | Optional |
-| file-system-anomaly | Optional |
-| hw-authentic | Chip dependent |
-| hw-verification-fail | Chip dependent |
-| runtime-confidential | Implicit |
-| target-isolation | Implicit in signature |
-| secure-storage | Chip dependent |
-| source-data-integrity | Optional |
+| Trustworthiness Claim | Required? | Appraisal Method |
+| :--- | :--- |:--- |
+| ae-instance | Optional | Internally available in TEE.  But keys might not be known/exposed to the Relying Party by the Attesting Environment.   |
+| config-security | Optional | Requires application integration.  Easier than with process-based solution, as the whole protected machine can be evaluated.  |
+| executables-loaded | Optional | Internally available in TEE.  But keys might not be known/exposed to the Relying Party by the Attesting Environment.  |
+| file-system | Optional | Can be supported by application |
+| hw-authenticity | Chip dependent | At least the TEE is protected here. Other elements of the system outside of the TEE might need additional protections is used by the application process.  |
+| runtime-confidential | Implicit in signature |  From the TEE  |
+| secure-storage | Chip dependent | Although the application must assert that this function is used by the code itself.  |
+| source-data-integrity | Optional | Will need to be supported by application code  |
+| target-isolation | Implicit in signature | At least the TEE is protected here. Other elements of the system outside of the TEE might need additional protections is used by the application process.  |
+
 
 # Some issues being worked
 
@@ -688,9 +680,10 @@ There will need to be a subsequent document which documents how these objects wh
 Some breakpoint between what is in this draft, and what is in specific drafts for wire encoding will need to be determined.
 Questions like architecting the cluster/hierarchy of Verifiers fall into this breakdown.
 
-For Trustworthiness Claims such as 'exectables-verified', there could be value in identifying a specific Appraisal Policy for Attestation Results applied.
-One way this could be done would be a URI which identifies this policy.
+For some Trustworthiness Claims, there could be value in identifying a specific Appraisal Policy for Attestation Results applied within the Attester.
+One way this could be done would be a URI which identifies the policy used at Verifier A.
 As the URI also could encode the version of the software, it might also act as a mechanism to signal the Relying Party to refresh/re-evaluate its view of Verifier A.
+Do we need this type of structure to be included in this standard?  Should it be in subsequent documents?
 
 Expand the variant of {{interactions}} which requires no Relying Party PoF into its own picture.
 
