@@ -253,6 +253,10 @@ For more see {{claim-for-TEE-types}}.
 For the Verifier identity, it is critical for a Relying Party to review the certificate and chain of trust <!-- Henk(old): term not introduced, will have to introduce beforehand --> for that Verifier.
 Additionally, the Relying Party must have confidence that the Trustworthiness Claims being relied upon from the Verifier considered the chain of trust for the Attesting Environment <!-- Henk(old): more the reason to introduce the term -->.
 
+There are two categories of Verifier identities defined in this document.  This list is extensible:	
+* verifier build: a unique instance of a software build running as a Verifier.	
+* verifier developer: the organizational unit responsible for a particular 'verifier build'.
+
 ### Communicating Identity
 
 Any of the above identities used by the Appraisal Policy for Attestation Results needed to be pre-established by the Relying Party before, or provided during, the exchange of Attestation Results.
