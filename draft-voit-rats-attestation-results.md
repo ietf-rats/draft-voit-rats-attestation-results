@@ -254,6 +254,7 @@ For the Verifier identity, it is critical for a Relying Party to review the cert
 Additionally, the Relying Party must have confidence that the Trustworthiness Claims being relied upon from the Verifier considered the chain of trust for the Attesting Environment <!-- Henk(old): more the reason to introduce the term -->.
 
 There are two categories of Verifier identities defined in this document.  This list is extensible:	
+
 * verifier build: a unique instance of a software build running as a Verifier.	
 * verifier developer: the organizational unit responsible for a particular 'verifier build'.
 
@@ -283,27 +284,35 @@ Trust is a belief in some aspect about an entity (in this case an Attester), and
 Consequently, for these two meaningfully interact within the context of Remote Attestation, a Verifier must be able to parse detailed Evidence from an Attester and then assert different aspects trustworthiness interpretable by a Relying Party.
 
 Specific claims for which a Verifier will assert trustworthiness have been defined in this section.
-These are known as Trustworthiness Claims.  
+These are known as Trustworthiness Claims.
 These claims have been designed to enable a common understanding between a broad array of Attesters, Verifiers, and Relying Parties.  
 The following set of design principles have been applied in the Trustworthiness Claim definitions:
 
-1. Expose a small number of Trustworthiness Claims.  Reason: a plethora of similar Trustworthiness Claims will result in divergent choices made on which to support between different Verifiers.  This would place a lot of complexity in the Relying Party as it would be up to the RP (and its policy language) to enable normalization across rich but incompatible Verifier object definitions.
+1. Expose a small number of Trustworthiness Claims.  
 
-2. Each Trustworthiness Claim should enumerate only the specific states that could viably result in a different outcome after the Policy for Attestation Results has been applied.   Reason: by explicitly disallowing the standardization of enumerated states which cannot easily be connected to a use case, we avoid forcing implementers from making incompatible guesses on what these states might mean.  
+   Reason: a plethora of similar Trustworthiness Claims will result in divergent choices made on which to support between different Verifiers.  This would place a lot of complexity in the Relying Party as it would be up to the RP (and its policy language) to enable normalization across rich but incompatible Verifier object definitions.
 
-3. Verifier and RP developers need explicit definitions of *each* state in order to accomplish the goals of (1) and (2).  Reason: without such guidance, the Verifier will append plenty of raw supporting info.  The  relieves the Verifier of making the hard decisions.  Of course, this raw info will be mostly non-interpretable and therefore non-actionable by the RP.
+2. Each Trustworthiness Claim should enumerate only the specific states that could viably result in a different outcome after the Policy for Attestation Results has been applied.   
 
-4. We do need extensibility for (1) and (2).  But Verifier generated claims should be worked in the WG and managed via the RFC process, rather than being in a separately maintained Attester Claims list.  This will keep a tight lid on extensions which must be considered by the RP's policy language.
+   Reason: by explicitly disallowing the standardization of enumerated states which cannot easily be connected to a use case, we avoid forcing implementers from making incompatible guesses on what these states might mean.  
+
+3. Verifier and RP developers need explicit definitions of each state in order to accomplish the goals of (1) and (2).  
+
+   Reason: without such guidance, the Verifier will append plenty of raw supporting info.  The  relieves the Verifier of making the hard decisions.  Of course, this raw info will be mostly non-interpretable and therefore non-actionable by the RP.
+
+4. Support standards and non-standard extensibility for (1) and (2).  
+
+   Reason: The need is obvious.  Verifier generated claims should be worked in the WG and managed via the RFC process, rather than being in a separately maintained Attester Claims list.  This will keep a tight lid on extensions which must be considered by the RP's policy language.
 
 These design principles are important to keep the number of Verifier generated claims low, and to retain the complexity in the Verifier rather than the RP.
 
 ### Enumeration Encoding
 
-Per design principle (2), each Trustworthiness claim will only expose specific values.  
+Per design principle (2), each Trustworthiness claim will only expose specific values.
 To simplify the processing of these enumerations by the Relying Party, the enumeration will be encoded as a signed 8 bit integer, and will follow these guidelines:
 
 * Value 1: The Verifier affirms the Attester supports this aspect of trustworthiness.
-* Value between 1 and 127: The Verifier does not support this aspect of trustworthiness, with each value representing a specific standardized reason for the detrimental appraisal finding.
+* Values between 1 and 127: The Verifier does not support this aspect of trustworthiness, with each value representing a specific standardized reason for the detrimental appraisal finding.
 * Values less than 0: Verifier does not support this aspect of trustworthiness, with each value representing a specific non-standardized reason for the detrimental appraisal finding.
 * Value 0: The Verifier makes no assertions about this Trustworthiness Claim.  (Note: This is semantically equivalent to the Verifier making no Trustworthiness Claim of this type.  And the RP's Appraisal Policy for Attestation Results SHOULD NOT make any distinction between a Trustworthiness Claim with enumeration '0', and no Trustworthiness Claim being provided.)
 
@@ -317,70 +326,123 @@ Following are the Trustworthiness Claims and their supported enumerations which 
 ae-instance: 
 : A Verifier has appraised an Attesting Environment's identity based private key signed Evidence which can be correlated to a unique instantiated instance of the Attester.
 
-   0. No assertion
-   1. The Attesting Environment is recognized, and the private key associated with the instantiated instance of the Attester is not known to be compromised
-   2. The Attesting Environment is recognized, and but its unique private key may be compromised
-   3. The Attesting Environment is not recognized
+
+   0: 
+   : No assertion 
+   
+   1:
+   : The Attesting Environment is recognized, and the private key associated with the instantiated instance of the Attester is not known to be compromised 
+   
+   2:
+   : The Attesting Environment is recognized, and but its unique private key may be compromised 
+   
+   3:
+   : The Attesting Environment is not recognized 
+
 
 config-security:
 : A Verifier has appraised an Attester's configuration
 
-   0. No assertion
-   1. The configuration has no known exposed vulnerabilities
-   2. The configuration has known exposed vulnerabilities
+   0:
+   : No assertion
+   
+   1:
+   : The configuration has no known exposed vulnerabilities
+   
+   2:
+   : The configuration has known exposed vulnerabilities
 
 
 executables-loaded:
 : A Verifier has appraised the files which an Attester has installed into runtime memory 
 
-   0. No assertion
-   1. Only a recognized genuine set of approved executables, scripts, and files have been loaded during and after boot.
-   2. a recognized genuine set of executables, scripts, and files have been loaded during and after boot  However the Verifier cannot vouch for a subset of these files due to known bugs or other known vulnerabilities.
-   3. the Attester has installed into runtime memory executables, scripts, or files which are not recognized
-   4. the Attester has installed into runtime memory executables, scripts, or files which are known to be malevolent.
+   0:
+   : No assertion
+   
+   1:
+   : Only a recognized genuine set of approved executables, scripts, and files have been loaded during and after boot.
+   
+   2: 
+   : a recognized genuine set of executables, scripts, and files have been loaded during and after boot  However the Verifier cannot vouch for a subset of these files due to known bugs or other known vulnerabilities.
+   
+   3: 
+   : the Attester has installed into runtime memory executables, scripts, or files which are not recognized
+   
+   4: 
+   : the Attester has installed into runtime memory executables, scripts, or files which are known to be malevolent.
+
 
 file-system:
-:  A Verifier has evaluated the Attester's file system.
+: A Verifier has evaluated the Attester's file system.
 
-   0. No assertion
-   1. Only a recognized set of approved files are visible.
-   2. the Attester has executables, scripts, or files which are not recognized
-   3. the Attester has executables, scripts, or files which are known to be malevolent
+   0: 
+   : No assertion
+   
+   1:
+   : Only a recognized set of approved files are visible.
+   
+   2:
+   : the Attester has executables, scripts, or files which are not recognized
+   
+   3: 
+   : the Attester has executables, scripts, or files which are known to be malevolent
+
 
 hw-authenticity:
 : A Verifier has appraised any Attester hardware and firmware which are able to expose fingerprints of their identity and running code.
 
-   0. No assertion
-   1. An Attester has passed its hardware and/or firmware verification
-   2. An Attester has failed its hardware or firmware verification
+   0:
+   : No assertion
+   
+   1:
+   : An Attester has passed its hardware and/or firmware verification
+   
+   2:
+   : An Attester has failed its hardware or firmware verification
+
 
 runtime-confidential: 
 : A Verifier has appraised that an Attester is protected by CPU based Trusted Execution Environment. (Note: This Trustworthiness Claim provides a more secure superset of 'target-isolation'. It also corresponds to O.RUNTIME_CONFIDENTIALITY from {{GP-TEE-PP}})
 
-   0. No assertion
-   1.  the Attester's executing Target Environment and Attesting Environments are encrypted and within Trusted Execution Environment(s) opaque to the operating system, virtual machine manager, and peer  applications.  
+   0:
+   : No assertion
+   
+   1:
+   : the Attester's executing Target Environment and Attesting Environments are encrypted and within Trusted Execution Environment(s) opaque to the operating system, virtual machine manager, and peer  applications.  
 
 
 secure-storage:
 : A Verifier has appraised that an Attester has a Trusted Execution Environment capable of encrypting persistent storage using keys unavailable outside protected hardware. (Note: Protections must meet the capabilities of {{OMTP-ATE}} Section 5, but need not be hardware tamper resistant.)
 
-   0. No assertion about whether application data is actually being encrypted
-   1.  the Attester encrypts all secrets in persistent storage  
-   2.  the Attester does not encrypt all secrets in persistent storage  
+   0:
+   : No assertion about whether application data is actually being encrypted
+   
+   1:
+   : the Attester encrypts all secrets in persistent storage  
+   
+   2:
+   : the Attester does not encrypt all secrets in persistent storage  
      
 
 
 source-data-integrity:
 : A Verifier has appraised that the Attester is operating upon source data objects provided from an external Attester(s), where at least one Attester has provided a recent Trustworthiness Vector.
 
-   0. No assertion 
-   1.  All source data objects have been provided by other Attester(s) whose most recent appraisal(s) had both no Trustworthiness Claims of "0" where the current Trustworthiness Claim shows "1", and no Trustworthiness Claims above "1".
+   0: 
+   : No assertion 
+   
+   1:
+   : All source data objects have been provided by other Attester(s) whose most recent appraisal(s) had both no Trustworthiness Claims of "0" where the current Trustworthiness Claim shows "1", and no Trustworthiness Claims above "1".
 
 
 target-isolation:
 : A Verifier has appraised an Attester as having both execution and storage space which is inaccessible from any other parallel application or Guest VM running on the Attester's physical device.  (Note that a host operator may still have target environment visibility however. See O.TA_ISOLATION from {{GP-TEE-PP}}.)
 
-   1. the Attester is isolated from peer applications on the compute host.  
+   0: 
+   : No assertion 
+   
+   1:
+   : the Attester is isolated from peer applications on the compute host.  
     
 
 Additional Trustworthiness Claims may be defined in subsequent documents.
