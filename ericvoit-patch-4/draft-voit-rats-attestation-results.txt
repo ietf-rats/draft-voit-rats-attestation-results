@@ -5,14 +5,14 @@
 RATS Working Group                                               E. Voit
 Internet-Draft                                                     Cisco
 Intended status: Standards Track                             H. Birkholz
-Expires: 17 February 2022                                 Fraunhofer SIT
+Expires: 18 February 2022                                 Fraunhofer SIT
                                                              T. Hardjono
                                                                      MIT
                                                               T. Fossati
                                                              Arm Limited
                                                              V. Scarlata
                                                                    Intel
-                                                          16 August 2021
+                                                          17 August 2021
 
 
               Attestation Results for Secure Interactions
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 February 2022.
+   This Internet-Draft will expire on 18 February 2022.
 
 Copyright Notice
 
@@ -437,6 +437,13 @@ Table of Contents
    Additionally, the Relying Party must have confidence that the
    Trustworthiness Claims being relied upon from the Verifier considered
    the chain of trust for the Attesting Environment .
+
+   There are two categories of Verifier identities defined in this
+   document.  This list is extensible:
+   * verifier build: a unique instance of a software build running as a
+   Verifier.
+   * verifier developer: the organizational unit responsible for a
+   particular 'verifier build'.
 
 2.2.3.  Communicating Identity
 
