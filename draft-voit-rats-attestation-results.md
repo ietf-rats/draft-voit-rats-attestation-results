@@ -308,142 +308,180 @@ These design principles are important to keep the number of Verifier generated c
 
 ### Enumeration Encoding
 
-Per design principle (2), each Trustworthiness claim will only expose specific values.
-To simplify the processing of these enumerations by the Relying Party, the enumeration will be encoded as a signed 8 bit integer, and will follow these guidelines:
+Per design principle (2), each Trustworthiness Claim will only expose specific values.  
+To simplify the processing of these enumerations by the Relying Party, the enumeration will be encoded as a single signed 8 bit integer.  These assignments will be in four trustworthiness tiers which follow these guidelines:
 
-* Value 1: The Verifier affirms the Attester supports this aspect of trustworthiness.
-* Values between 1 and 127: The Verifier does not support this aspect of trustworthiness, with each value representing a specific standardized reason for the detrimental appraisal finding.
-* Values less than 0: Verifier does not support this aspect of trustworthiness, with each value representing a specific non-standardized reason for the detrimental appraisal finding.
-* Value 0: The Verifier makes no assertions about this Trustworthiness Claim.  (Note: This is semantically equivalent to the Verifier making no Trustworthiness Claim of this type.  And the RP's Appraisal Policy for Attestation Results SHOULD NOT make any distinction between a Trustworthiness Claim with enumeration '0', and no Trustworthiness Claim being provided.)
+Affirming: The Verifier affirms the Attester support for this aspect of trustworthiness
 
-This enumeration encoding will simplify the Appraisal Policy for Attestation Results.
-Such a policies may be as simple as saying that a specific Verifier has recently asserted Trustworthiness Claims which have no values other than "1" or "0".
+* Values 1-31: A standards enumerated reason for affirming.
+* Values -1 to -32: A non-standard reason for affirming.
+
+Warning: The Verifier warns about this aspect of trustworthiness.
+
+* Values 32-63: A standards enumerated reason for the warning.
+* Values -33 to -64: A non-standard reason for the warning.
+
+Contraindicated: The Verifier does not support this aspect of trustworthiness.    
+
+* Values 64-127: A standards enumerated reason for the contraindication.
+* Values -65 to -128: A non-standard reason for the contraindication.
+
+None: The Verifier makes no assertions about this Trustworthiness Claim.  
+
+* Value 0: Note: this should always be always treated equivalently by the Relying Party as no claim being made. I.e., the RP's Appraisal Policy for Attestation Results SHOULD NOT make any distinction between a Trustworthiness Claim with enumeration '0', and no Trustworthiness Claim being provided.
+
+This enumerated encoding listed above will simplify the Appraisal Policy for Attestation Results.
+Such a policies may be as simple as saying that a specific Verifier has recently asserted Trustworthiness Claims, all of which are Affirming.
+
+### Assigning a Trustworthiness Claim value
+
+In order to simplify design, only a single encoded value is asserted for any Trustworthiness Claim within a Trustworthiness Vector using the following process.  
+
+1. If applicable, a Relying Party MUST assign a standardized code from the Contraindicated tier.   
+2. Else if applicable, a Relying Party MUST assign a non-standardized code from the Contraindicated tier.    
+3. Else if applicable, a Relying Party MUST assign a standardized code from the Warning tier.  
+4. Else if applicable, a Relying Party MUST assign a non-standardized code from the Warning tier.
+5. Else if applicable, a Relying Party MUST assign a standardized code from the Affirming tier.    
+6. Else if applicable, a Relying Party MUST assign a non-standardized code from the Affirming tier. 
+7. Else a Relying Party MAY assign a 0.     
+
+The standardized Trustworthiness Claim values listed below have been design so there is no overlap within a trustworthiness tier. 
 
 ### Specific Claims
 
 Following are the Trustworthiness Claims and their supported enumerations which may be asserted by a Verifier:
 
-ae-instance: 
-: A Verifier has appraised an Attesting Environment's identity based private key signed Evidence which can be correlated to a unique instantiated instance of the Attester.
-
-
-   0: 
-   : No assertion 
-   
-   1:
-   : The Attesting Environment is recognized, and the private key associated with the instantiated instance of the Attester is not known to be compromised 
-   
-   2:
-   : The Attesting Environment is recognized, and but its unique private key may be compromised 
-   
-   3:
-   : The Attesting Environment is not recognized 
-
-
-config-security:
-: A Verifier has appraised an Attester's configuration
+configuration:
+: A Verifier has appraised an Attester's configuration, and is able to make conclusions regarding the exposure of known vulnerabilities
 
    0:
    : No assertion
    
    1:
-   : The configuration has no known exposed vulnerabilities
+   : The configuration is a known and approved config
    
    2:
-   : The configuration has known exposed vulnerabilities
+   : The configuration includes or exposes no known vulnerabilities
+   
+   32:
+   : The configuration includes or exposes known vulnerabilities
+   
+   64:
+   : The configuration is unsupportable as it exposes unacceptable security vulnerabilities
 
-
-executables-loaded:
-: A Verifier has appraised the files which an Attester has installed into runtime memory 
+executables:
+: A Verifier has appraised and evaluated relevant runtime files, scripts, and/or other objects which have been loaded into the Target environment's memory.
 
    0:
    : No assertion
    
    1:
-   : Only a recognized genuine set of approved executables, scripts, and files have been loaded during and after boot.
+   : Only a recognized genuine set of approved executables, scripts, files, and/or objects have been loaded during and after the boot process.
    
-   2: 
-   : a recognized genuine set of executables, scripts, and files have been loaded during and after boot  However the Verifier cannot vouch for a subset of these files due to known bugs or other known vulnerabilities.
+   2:
+   : Only a recognized genuine set of approved executables have been loaded during the boot process.
    
-   3: 
-   : the Attester has installed into runtime memory executables, scripts, or files which are not recognized
+   32:
+   : Only a recognized genuine set of executables, scripts, files, and/or objects have been loaded.  However the Verifier cannot vouch for a subset of these due to known bugs or other known vulnerabilities.
    
-   4: 
-   : the Attester has installed into runtime memory executables, scripts, or files which are known to be malevolent.
-
+   33:
+   : Runtime memory includes executables, scripts, files, and/or objects which are not recognized.
+   
+   64:
+   : Runtime memory includes executables, scripts, files, and/or object which are contraindicated.
 
 file-system:
-: A Verifier has evaluated the Attester's file system.
+:  A Verifier has evaluated the Attester's file system.
 
-   0: 
+   0:
    : No assertion
    
    1:
-   : Only a recognized set of approved files are visible.
+   : Only a recognized set of approved files are found.
    
-   2:
-   : the Attester has executables, scripts, or files which are not recognized
+   32:
+   : The file system includes unrecognized executables, scripts, or files.
    
-   3: 
-   : the Attester has executables, scripts, or files which are known to be malevolent
+   64:
+   : The file system includes contraindicated executables, scripts, or files 
 
-
-hw-authenticity:
+hardware:
 : A Verifier has appraised any Attester hardware and firmware which are able to expose fingerprints of their identity and running code.
 
    0:
    : No assertion
    
    1:
-   : An Attester has passed its hardware and/or firmware verification
+   : An Attester has passed its hardware and/or firmware verifications needed to demonstrate that these are genuine/supported.
+
+   32: An Attester contains only genuine/supported hardware and/or firmware, but there are known security vulnerabilities.
    
-   2:
-   : An Attester has failed its hardware or firmware verification
+   64:
+   : Attester hardware and/or firmware is recognized, but its trustworthiness is contraindicated.
+   
+   65:
+   : A Verifier does not recognize an Attester's hardware aor firmware, but it should be recognized.
 
-
-runtime-confidential: 
-: A Verifier has appraised that an Attester is protected by CPU based Trusted Execution Environment. (Note: This Trustworthiness Claim provides a more secure superset of 'target-isolation'. It also corresponds to O.RUNTIME_CONFIDENTIALITY from {{GP-TEE-PP}})
+instance-identity: 
+: A Verifier has appraised an Attesting Environment's unique identity based upon private key signed Evidence which can be correlated to a unique instantiated instance of the Attester.  (Note: this Trustworthiness Claim should only be generated if the Verifier expects to recognize the unique identity of the Attester.)
 
    0:
    : No assertion
    
    1:
-   : the Attester's executing Target Environment and Attesting Environments are encrypted and within Trusted Execution Environment(s) opaque to the operating system, virtual machine manager, and peer  applications.  
+   : The Attesting Environment is recognized, and the associated instance of the Attester is not known to be compromised.
+   
+   64:
+   : The Attesting Environment is recognized, and but its unique private key indicates a device which is not trustworthy.
+   
+   65:
+   : The Attesting Environment is not recognized; however the Verifier believes it should be.
 
-
-secure-storage:
-: A Verifier has appraised that an Attester has a Trusted Execution Environment capable of encrypting persistent storage using keys unavailable outside protected hardware. (Note: Protections must meet the capabilities of {{OMTP-ATE}} Section 5, but need not be hardware tamper resistant.)
+runtime-opaque: 
+: A Verifier has appraised the visibility of Attester objects in memory from perspectives outside the Attester.
 
    0:
-   : No assertion about whether application data is actually being encrypted
+   : No assertion
    
    1:
-   : the Attester encrypts all secrets in persistent storage  
+   : the Attester's executing Target Environment and Attesting Environments are encrypted and within Trusted Execution Environment(s) opaque to the operating system, virtual machine manager, and peer  applications.  (Note: This value corresponds to the protections asserted by O.RUNTIME_CONFIDENTIALITY from {{GP-TEE-PP}})
    
-   2:
-   : the Attester does not encrypt all secrets in persistent storage  
+   32:
+   : the Attester's executing Target Environment and Attesting Environments inaccessible from any other parallel application or Guest VM running on the Attester's physical device.  (Note that unlike "1" these environments are not encrypted in a way which restricts the Attester's root operator visibility. See O.TA_ISOLATION from {{GP-TEE-PP}}.)
+   
+   64:
+   : The Verifier has concluded that in memory objects are unacceptably visible within the physical host that supports the Attester.
+ 
+sourced-data:
+: A Verifier has evaluated of the integrity of data objects from external systems used by the Attester.
+
+   0:
+   : No assertion 
+   
+   1:
+   : All essential Attester source data objects have been provided by other Attester(s) whose most recent appraisal(s) had both no Trustworthiness Claims of "0" where the current Trustworthiness Claim is "Affirming", as well as no "Warning" or "Contraindicated" Trustworthiness Claims.
+   
+   32:
+   : Attester source data objects come from unattested sources, or attested sources with "Warning" type Trustworthiness Claims.
+   
+   64:
+   : Attester source data objects come from contraindicated sources.
+
+storage-opaque:
+: A Verifier has appraised that an Attester is capable of encrypting persistent storage. (Note: Protections must meet the capabilities of {{OMTP-ATE}} Section 5, but need not be hardware tamper resistant.)
+
+   0:
+   : No assertion
+   
+   1:
+   : the Attester encrypts all secrets in persistent storage via using keys which are never visible outside an HSM or the Trusted Execution Environment hardware.
+  
+   32:
+   : the Attester encrypts all persistently stored secrets, but without using hardware backed keys
+
+   64:
+   : There are persistent secrets which are stored unencrypted in an Attester.
      
-
-
-source-data-integrity:
-: A Verifier has appraised that the Attester is operating upon source data objects provided from an external Attester(s), where at least one Attester has provided a recent Trustworthiness Vector.
-
-   0: 
-   : No assertion 
-   
-   1:
-   : All source data objects have been provided by other Attester(s) whose most recent appraisal(s) had both no Trustworthiness Claims of "0" where the current Trustworthiness Claim shows "1", and no Trustworthiness Claims above "1".
-
-
-target-isolation:
-: A Verifier has appraised an Attester as having both execution and storage space which is inaccessible from any other parallel application or Guest VM running on the Attester's physical device.  (Note that a host operator may still have target environment visibility however. See O.TA_ISOLATION from {{GP-TEE-PP}}.)
-
-   0: 
-   : No assertion 
-   
-   1:
-   : the Attester is isolated from peer applications on the compute host.  
-    
 
 Additional Trustworthiness Claims may be defined in subsequent documents.
 
@@ -652,19 +690,19 @@ Note that claims MAY BE implicit to an Attesting Environment type, and therefore
 
 ## Supportable Trustworthiness Claims for HSM-based CC
 
-Following are Trustworthiness Claims which MAY be set for a HSM-based Confidential Computing Attester. (Such as a TPM.)
+Following are Trustworthiness Claims which MAY be set for a HSM-based Confidential Computing Attester. (Such as a TPM {{TPM-ID}}.)
 
 | Trustworthiness Claim | Required? | Appraisal Method |
 | :--- | :--- |:--- |
-| ae-instance | Optional | Check IDevID |
-| config-security | Optional | Verifier evaluation of Attester reveals no configuration lines which expose the Attester to known security vulnerabilities.  This may be done with or without the involvement of a TPM PCR. |
-| executables-loaded | Yes | Checks the TPM PCRs for the static operating system, and for any tracked files subsequently loaded |
+| configuration | Optional | Verifier evaluation of Attester reveals no configuration lines which expose the Attester to known security vulnerabilities.  This may be done with or without the involvement of a TPM PCR. |
+| executables | Yes | Checks the TPM PCRs for the static operating system, and for any tracked files subsequently loaded |
 | file-system | No  | Can be supported, but TPM tracking is unlikely |
-| hw-authenticity | Yes | If TPM PCR check ok from BIOS checks, through Master Boot Record configuration |
-| runtime-confidential | n/a | TPMs are not recommended to provide a sufficient technology base for this Trustworthiness Claim. |
-| secure-storage | Minimal | With a TPM, secure storage space exists and is writeable by external applications. But the space is so limited that it often is used just be used to store keys. |
-| source-data-integrity | n/a | TPMs are not recommended to provide a sufficient technology base for this Trustworthiness Claim. |
-| target-isolation | Optional | In general practice, this will be hard to support.  But perhaps tracking executables loaded can be used to assert that no other applications are running on the Attester |
+| hardware | Yes | If TPM PCR check ok from BIOS checks, through Master Boot Record configuration |
+| instance-identity | Optional | Check IDevID |
+| runtime-opaque | n/a | TPMs are not recommended to provide a sufficient technology base for this Trustworthiness Claim. |
+| sourced-data | n/a | TPMs are not recommended to provide a sufficient technology base for this Trustworthiness Claim. |
+| storage-opaque | Minimal | With a TPM, secure storage space exists and is writeable by external applications. But the space is so limited that it often is used just be used to store keys. |
+
 
 Setting the Trustworthiness Claims may follow the following logic at the Verifier A within (2) of {{interactions}}:
  
@@ -681,15 +719,15 @@ Step 1: Is there sufficient fresh signed evidence to appraise?
   (no) -  Goto Step 6
 
 Step 2: Appraise Hardware Integrity PCRs
-   if (hw-authenticity <> "0") - push onto vector
-   if (hw-authenticity NOT "1"), go to Step 6
+   if (hardware <> "0") - push onto vector
+   if (hardware > "63" or <-64), go to Step 6
 
 Step 3: Appraise Attesting Environment identity
-   if (ae-instance <> "0") - push onto vector
+   if (instance-identity <> "0") - push onto vector
 
 Step 4: Appraise executable loaded and filesystem integrity
-   if (executables-loaded <> "0") - push onto vector
-   if (executables-loaded NOT "1") go to Step 6
+   if (executables <> "0") - push onto vector
+   if (executables > "63" or <-64), go to Step 6
 
 Step 5: Appraise all remaining Trustworthiness Claims
         Independently and set as appropriate.
@@ -700,7 +738,6 @@ End
 
 ~~~
 
-
 {: #process-based-claims}
 ## Supportable Trustworthiness Claims for process-based CC
 
@@ -708,15 +745,14 @@ Following are Trustworthiness Claims which MAY be set for a process-based Confid
 
 | Trustworthiness Claim | Required? | Appraisal Method |
 | :--- | :--- |:--- |
-| ae-instance | Optional | Internally available in TEE.  But keys might not be known/exposed to the Relying Party by the Attesting Environment.   |
-| config-security | Optional | If done, this is at the Application Layer.  Plus each process needs it own protection mechanism as the protection is limited to the process itself.   |
-| executables-loaded | Optional | Internally available in TEE.  But keys might not be known/exposed to the Relying Party by the Attesting Environment.  |
+| instance-identity | Optional | Internally available in TEE.  But keys might not be known/exposed to the Relying Party by the Attesting Environment.   |
+| configuration | Optional | If done, this is at the Application Layer.  Plus each process needs it own protection mechanism as the protection is limited to the process itself.   |
+| executables | Optional | Internally available in TEE.  But keys might not be known/exposed to the Relying Party by the Attesting Environment.  |
 | file-system | Optional | Can be supported by application, but process-based CC is not a sufficient technology base for this Trustworthiness Claim. |
-| hw-authenticity | Implicit in signature | At least the TEE is protected here. Other elements of the system outside of the TEE might need additional protections is used by the application process.  |
-| runtime-confidential | Implicit in signature |  From the TEE  |
-| secure-storage | Implicit in signature | Although the application must assert that this function is used by the code itself.  |
-| source-data-integrity | Optional | Will need to be supported by application code  |
-| target-isolation | Implicit in signature | At least the TEE is protected here. Other elements of the system outside of the TEE might need additional protections is used by the application process.  |
+| hardware | Implicit in signature | At least the TEE is protected here. Other elements of the system outside of the TEE might need additional protections is used by the application process.  |
+| runtime-opaque | Implicit in signature |  From the TEE  |
+| storage-opaque | Implicit in signature | Although the application must assert that this function is used by the code itself.  |
+| sourced-data | Optional | Will need to be supported by application code  |
 
 
 {: #VM-based-claims}
@@ -726,15 +762,14 @@ Following are Trustworthiness Claims which MAY be set for a VM-based Confidentia
 
 | Trustworthiness Claim | Required? | Appraisal Method |
 | :--- | :--- |:--- |
-| ae-instance | Optional | Internally available in TEE.  But keys might not be known/exposed to the Relying Party by the Attesting Environment.   |
-| config-security | Optional | Requires application integration.  Easier than with process-based solution, as the whole protected machine can be evaluated.  |
-| executables-loaded | Optional | Internally available in TEE.  But keys might not be known/exposed to the Relying Party by the Attesting Environment.  |
+| instance-identity | Optional | Internally available in TEE.  But keys might not be known/exposed to the Relying Party by the Attesting Environment.   |
+| configuration | Optional | Requires application integration.  Easier than with process-based solution, as the whole protected machine can be evaluated.  |
+| executables | Optional | Internally available in TEE.  But keys might not be known/exposed to the Relying Party by the Attesting Environment.  |
 | file-system | Optional | Can be supported by application |
-| hw-authenticity | Chip dependent | At least the TEE is protected here. Other elements of the system outside of the TEE might need additional protections is used by the application process.  |
-| runtime-confidential | Implicit in signature |  From the TEE  |
-| secure-storage | Chip dependent | Although the application must assert that this function is used by the code itself.  |
-| source-data-integrity | Optional | Will need to be supported by application code  |
-| target-isolation | Implicit in signature | At least the TEE is protected here. Other elements of the system outside of the TEE might need additional protections is used by the application process.  |
+| hardware | Chip dependent | At least the TEE is protected here. Other elements of the system outside of the TEE might need additional protections is used by the application process.  |
+| runtime-opaque | Implicit in signature |  From the TEE  |
+| storage-opaque | Chip dependent | Although the application must assert that this function is used by the code itself.  |
+| sourced-data | Optional | Will need to be supported by application code  |
 
 
 # Some issues being worked
