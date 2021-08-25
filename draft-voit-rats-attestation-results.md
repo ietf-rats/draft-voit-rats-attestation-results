@@ -225,7 +225,7 @@ There are several types of Attester identities defined in this document.  This l
 * chip-hardware: specific hardware with specific firmware from an 'ae-vendor'
 * target-environment: a unique instance of a software build running in an Attester (e.g., MRENCLAVE {{SGX}}, an Instance ID {{-PSA}}, or a hash which represents a set of software loaded since boot (e.g., TPM based integrity verification.))
 * target-developer: the organizational unit responsible for a particular 'target-environment' (e.g., MRSIGNER {{SGX}})
-* ae-instance: a unique deployed instance of an Attesting Environment running on 'chip-hardware' (e.g., an LDevID {{IEEE802.1AR}})
+* instance: a unique instantiated instance of an Attesting Environment running on 'chip-hardware' (e.g., an LDevID {{IEEE802.1AR}})
 * (need to map SEV into above.)
 
 Based on the category of the Attesting Environment, different types of identities might be exposed by an Attester.
@@ -236,7 +236,7 @@ Based on the category of the Attesting Environment, different types of identitie
 | chip-hardware | Mandatory | Mandatory | Mandatory |
 | target-environment | Mandatory | Mandatory | Optional |
 | target-developer | Mandatory | Optional | Optional |
-| ae-instance | Optional | Optional | Optional |
+| instance | Optional | Optional | Optional |
 
 It is expected that drafts subsequent to this specification will provide the definitions and value domains for specific identities, each of which falling within the Attester identity types listed above.
 In some cases the actual unique identities might encoded as complex structures.
@@ -290,7 +290,7 @@ The following set of design principles have been applied in the Trustworthiness 
 
 1. Expose a small number of Trustworthiness Claims.  
 
-   Reason: a plethora of similar Trustworthiness Claims will result in divergent choices made on which to support between different Verifiers.  This would place a lot of complexity in the Relying Party as it would be up to the RP (and its policy language) to enable normalization across rich but incompatible Verifier object definitions.
+   Reason: a plethora of similar Trustworthiness Claims will result in divergent choices made on which to support between different Verifiers.  This would place a lot of complexity in the Relying Party as it would be up to the Relying Party (and its policy language) to enable normalization across rich but incompatible Verifier object definitions.
 
 2. Each Trustworthiness Claim should enumerate only the specific states that could viably result in a different outcome after the Policy for Attestation Results has been applied.   
 
@@ -298,13 +298,13 @@ The following set of design principles have been applied in the Trustworthiness 
 
 3. Verifier and RP developers need explicit definitions of each state in order to accomplish the goals of (1) and (2).  
 
-   Reason: without such guidance, the Verifier will append plenty of raw supporting info.  The  relieves the Verifier of making the hard decisions.  Of course, this raw info will be mostly non-interpretable and therefore non-actionable by the RP.
+   Reason: without such guidance, the Verifier will append plenty of raw supporting info.  The  relieves the Verifier of making the hard decisions.  Of course, this raw info will be mostly non-interpretable and therefore non-actionable by the Relying Party.
 
 4. Support standards and non-standard extensibility for (1) and (2).  
 
-   Reason: The need is obvious.  Verifier generated claims should be worked in the WG and managed via the RFC process, rather than being in a separately maintained Attester Claims list.  This will keep a tight lid on extensions which must be considered by the RP's policy language.
+   Reason: The need is obvious.  Verifier generated claims should be vetted by the full RATS working group, rather than being in a separately maintained Attester Claims list.  This will keep a tight lid on extensions which must be considered by the Relying Party's policy language.
 
-These design principles are important to keep the number of Verifier generated claims low, and to retain the complexity in the Verifier rather than the RP.
+These design principles are important to keep the number of Verifier generated claims low, and to retain the complexity in the Verifier rather than the Relying Party.
 
 ### Enumeration Encoding
 
@@ -423,7 +423,7 @@ hardware:
    : A Verifier does not recognize an Attester's hardware aor firmware, but it should be recognized.
 
 instance-identity: 
-: A Verifier has appraised an Attesting Environment's unique identity based upon private key signed Evidence which can be correlated to a unique instantiated instance of the Attester.  (Note: this Trustworthiness Claim should only be generated if the Verifier expects to recognize the unique identity of the Attester.)
+: A Verifier has appraised an Attesting Environment's unique identity based upon private key signed Evidence which can be correlated to a unique instantiated instance of the Attester.  (Note: this Trustworthiness Claim should only be generated if the Verifier actually expects to recognize the unique identity of the Attester.)
 
    0:
    : No assertion
@@ -803,3 +803,4 @@ Email: gfedorkow@juniper.net
 Dave Thaler
 
 Email: dthaler@microsoft.com
+
