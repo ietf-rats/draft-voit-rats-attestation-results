@@ -612,7 +612,7 @@ Table of Contents
    7.  Else a Relying Party MAY assign a 0.
 
    The standardized Trustworthiness Claim values listed below have been
-   design so there is no overlap within a trustworthiness tier.
+   designed so there is no overlap within a trustworthiness tier.
 
 2.3.4.  Specific Claims
 
