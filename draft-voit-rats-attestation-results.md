@@ -345,7 +345,7 @@ In order to simplify design, only a single encoded value is asserted for any Tru
 6. Else if applicable, a Relying Party MUST assign a non-standardized code from the Affirming tier. 
 7. Else a Relying Party MAY assign a 0.     
 
-The standardized Trustworthiness Claim values listed below have been design so there is no overlap within a trustworthiness tier. 
+The standardized Trustworthiness Claim values listed below have been designed so there is no overlap within a trustworthiness tier. 
 
 ### Specific Claims
 
