@@ -806,3 +806,7 @@ Email: gfedorkow@juniper.net
 Dave Thaler
 
 Email: dthaler@microsoft.com
+
+Ned Smith
+
+Email: ned.smith@intel.com
