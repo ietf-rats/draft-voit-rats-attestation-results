@@ -5,14 +5,14 @@
 RATS Working Group                                               E. Voit
 Internet-Draft                                                     Cisco
 Intended status: Standards Track                             H. Birkholz
-Expires: 26 February 2022                                 Fraunhofer SIT
+Expires: 27 February 2022                                 Fraunhofer SIT
                                                              T. Hardjono
                                                                      MIT
                                                               T. Fossati
                                                              Arm Limited
                                                              V. Scarlata
                                                                    Intel
-                                                          25 August 2021
+                                                          26 August 2021
 
 
               Attestation Results for Secure Interactions
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 February 2022.
+   This Internet-Draft will expire on 27 February 2022.
 
 Copyright Notice
 
@@ -524,7 +524,7 @@ Table of Contents
        state in order to accomplish the goals of (1) and (2).
 
        Reason: without such guidance, the Verifier will append plenty of
-       raw supporting info.  The relieves the Verifier of making the
+       raw supporting info.  This relieves the Verifier of making the
        hard decisions.  Of course, this raw info will be mostly non-
        interpretable and therefore non-actionable by the Relying Party.
 
