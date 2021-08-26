@@ -339,7 +339,7 @@ Such a policies may be as simple as saying that a specific Verifier has recently
 
 ### Assigning a Trustworthiness Claim value
 
-In order to simplify design, only a single encoded value is asserted for any Trustworthiness Claim within a Trustworthiness Vector using the following process.  
+In order to simplify design, only a single encoded value is asserted by a Verifier for any Trustworthiness Claim within a using the following process.  
 
 1. If applicable, a Verifier MUST assign a standardized code from the Contraindicated tier.   
 2. Else if applicable, a Verifier MUST assign a non-standardized code from the Contraindicated tier.    
@@ -349,7 +349,6 @@ In order to simplify design, only a single encoded value is asserted for any Tru
 6. Else if applicable, a Verifier MUST assign a non-standardized code from the Affirming tier. 
 7. Else a Verifier MAY assign a 0.     
 
-The standardized Trustworthiness Claim values listed below have been designed so there is no overlap within a Trustworthiness Tier. 
 
 ### Specific Claims
 
@@ -487,11 +486,15 @@ storage-opaque:
    : There are persistent secrets which are stored unencrypted in an Attester.
      
 
-It is possible for addtional Trustworthiness Claims and enumerated values to be defined in subsequent documents.  Where a Relying Party doesn't know how to handle a particular Trustworthiness Claim, it MAY choose an appropriate action based on the Trustworthiness Tier indicated by the value. 
+It is possible for addtional Trustworthiness Claims and enumerated values to be defined in subsequent documents. 
+At the same time, the standardized Trustworthiness Claim values listed above have been designed so there is no overlap within a Trustworthiness Tier.
+As a result, it is possible to imagine a future where overlapping Trustworthiness Claims within a single Trustworthiness Tier may be defined.  
+Wherever possible, the Verifier SHOULD assign the best fitting standardized value.
+
+Where a Relying Party doesn't know how to handle a particular Trustworthiness Claim, it MAY choose an appropriate action based on the Trustworthiness Tier under which the enumerated value fits. 
 
 It is up to the Verifier to publish the types of evaluations it performs when determining how Trustworthiness Claims are derived for a type of any particular type of Attester.   
 It is out of the scope of this document for the Verifier to provide proof or specific logic on how a particular Trustworthiness Claim which it is asserting was derived.
-
 
 
 ### Trustworthiness Vector
