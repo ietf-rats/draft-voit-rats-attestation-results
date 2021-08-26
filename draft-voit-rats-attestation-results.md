@@ -298,7 +298,7 @@ The following set of design principles have been applied in the Trustworthiness 
 
 3. Verifier and RP developers need explicit definitions of each state in order to accomplish the goals of (1) and (2).  
 
-   Reason: without such guidance, the Verifier will append plenty of raw supporting info.  The  relieves the Verifier of making the hard decisions.  Of course, this raw info will be mostly non-interpretable and therefore non-actionable by the Relying Party.
+   Reason: without such guidance, the Verifier will append plenty of raw supporting info.  This relieves the Verifier of making the hard decisions.  Of course, this raw info will be mostly non-interpretable and therefore non-actionable by the Relying Party.
 
 4. Support standards and non-standard extensibility for (1) and (2).  
 
