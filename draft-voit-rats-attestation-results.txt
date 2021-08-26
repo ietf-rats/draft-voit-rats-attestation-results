@@ -1404,6 +1404,10 @@ Appendix C.  Contributors
 
    Email: dthaler@microsoft.com
 
+   Ned Smith
+
+   Email: ned.smith@intel.com
+
 Authors' Addresses
 
    Eric Voit
