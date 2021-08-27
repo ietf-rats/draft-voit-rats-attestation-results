@@ -316,17 +316,17 @@ To simplify the processing of these enumerations by the Relying Party, the enume
 
 Affirming: The Verifier affirms the Attester support for this aspect of trustworthiness
 
-* Values 1-31: A standards enumerated reason for affirming.
+* Values 1 to 31: A standards enumerated reason for affirming.
 * Values -2 to -32: A non-standard reason for affirming.
 
 Warning: The Verifier warns about this aspect of trustworthiness.
 
-* Values 32-63: A standards enumerated reason for the warning.
+* Values 32 to 63: A standards enumerated reason for the warning.
 * Values -33 to -64: A non-standard reason for the warning.
 
 Contraindicated: The Verifier asserts the Attester is explicitly untrustworthy in regard to this aspect.    
 
-* Values 64-127: A standards enumerated reason for the contraindication.
+* Values 64 to 127: A standards enumerated reason for the contraindication.
 * Values -65 to -128: A non-standard reason for the contraindication.
 
 None: The Verifier makes no assertions about this Trustworthiness Claim.  
@@ -725,14 +725,14 @@ Step 1: Is there sufficient fresh signed evidence to appraise?
   (no) -  Goto Step 6
 
 Step 2: Appraise Hardware Integrity PCRs
-   if (hardware <> "0") - push onto vector
+   if (hardware NOT "0") - push onto vector
    if (hardware NOT affirming or warning), go to Step 6
 
 Step 3: Appraise Attesting Environment identity
    if (instance-identity <> "0") - push onto vector
 
 Step 4: Appraise executable loaded and filesystem integrity
-   if (executables <> "0") - push onto vector
+   if (executables NOT "0") - push onto vector
    if (executables NOT affirming or warning), go to Step 6
 
 Step 5: Appraise all remaining Trustworthiness Claims
@@ -788,16 +788,14 @@ Some breakpoint between what is in this draft, and what is in specific drafts fo
 Questions like architecting the cluster/hierarchy of Verifiers fall into this breakdown.
 
 For some Trustworthiness Claims, there could be value in identifying a specific Appraisal Policy for Attestation Results applied within the Attester.
-One way this could be done would be a URI which identifies the policy used at Verifier A.
+One way this could be done would be a URI which identifies the policy used at Verifier A, and this URI would reference a specific Trustworthiness Claim.
 As the URI also could encode the version of the software, it might also act as a mechanism to signal the Relying Party to refresh/re-evaluate its view of Verifier A.
-Do we need this type of structure to be included in this standard?  Should it be in subsequent documents?
+Do we need this type of structure to be included here?  
+Should it be in subsequent documents?
 
 Expand the variant of {{interactions}} which requires no Relying Party PoF into its own picture.
 
-Rather than duplicating claim concepts for affirming vs detracting, perhaps we could collapse them and have affirming vs detracting be part of the value.
-Not collapsing complicates the test matrix.
-
-Normalization of the identity claims between different types of TEE.   E.g., does MRSIGNER plus extra loaded software = the sum of TrustZone Signer IDs for loaded components?
+In what document (if any) do we attempt normalization of the identity claims between different types of TEE.   E.g., does MRSIGNER plus extra loaded software = the sum of TrustZone Signer IDs for loaded components?
 
 
 # Contributors
