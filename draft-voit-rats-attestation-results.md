@@ -311,7 +311,7 @@ These design principles are important to keep the number of Verifier generated c
 
 ### Enumeration Encoding
 
-Per design principle (2), each Trustworthiness Claim will only expose specific values.  
+Per design principle (2), each Trustworthiness Claim will only expose specific encoded values.  
 To simplify the processing of these enumerations by the Relying Party, the enumeration will be encoded as a single signed 8 bit integer.  These value assignments for this integer will be in four Trustworthiness Tiers which follow these guidelines:
 
 Affirming: The Verifier affirms the Attester support for this aspect of trustworthiness
@@ -341,12 +341,12 @@ Such a policies may be as simple as saying that a specific Verifier has recently
 
 In order to simplify design, only a single encoded value is asserted by a Verifier for any Trustworthiness Claim within a using the following process.  
 
-1. If applicable, a Verifier MUST assign a standardized code from the Contraindicated tier.   
-2. Else if applicable, a Verifier MUST assign a non-standardized code from the Contraindicated tier.    
-3. Else if applicable, a Verifier MUST assign a standardized code from the Warning tier.  
-4. Else if applicable, a Verifier MUST assign a non-standardized code from the Warning tier.
-5. Else if applicable, a Verifier MUST assign a standardized code from the Affirming tier.    
-6. Else if applicable, a Verifier MUST assign a non-standardized code from the Affirming tier. 
+1. If applicable, a Verifier MUST assign a standardized value from the Contraindicated tier.   
+2. Else if applicable, a Verifier MUST assign a non-standardized value from the Contraindicated tier.    
+3. Else if applicable, a Verifier MUST assign a standardized value from the Warning tier.  
+4. Else if applicable, a Verifier MUST assign a non-standardized value from the Warning tier.
+5. Else if applicable, a Verifier MUST assign a standardized value from the Affirming tier.    
+6. Else if applicable, a Verifier MUST assign a non-standardized value from the Affirming tier. 
 7. Else a Verifier MAY assign a 0.     
 
 
