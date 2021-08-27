@@ -552,7 +552,7 @@ Table of Contents
 2.3.2.  Enumeration Encoding
 
    Per design principle (2), each Trustworthiness Claim will only expose
-   specific values.
+   specific encoded values.
    To simplify the processing of these enumerations by the Relying
    Party, the enumeration will be encoded as a single signed 8 bit
    integer.  These value assignments for this integer will be in four
@@ -606,23 +606,23 @@ Table of Contents
    by a Verifier for any Trustworthiness Claim within a using the
    following process.
 
-   1.  If applicable, a Verifier MUST assign a standardized code from
+   1.  If applicable, a Verifier MUST assign a standardized value from
        the Contraindicated tier.
 
    2.  Else if applicable, a Verifier MUST assign a non-standardized
-       code from the Contraindicated tier.
+       value from the Contraindicated tier.
 
-   3.  Else if applicable, a Verifier MUST assign a standardized code
+   3.  Else if applicable, a Verifier MUST assign a standardized value
        from the Warning tier.
 
    4.  Else if applicable, a Verifier MUST assign a non-standardized
-       code from the Warning tier.
+       value from the Warning tier.
 
-   5.  Else if applicable, a Verifier MUST assign a standardized code
+   5.  Else if applicable, a Verifier MUST assign a standardized value
        from the Affirming tier.
 
    6.  Else if applicable, a Verifier MUST assign a non-standardized
-       code from the Affirming tier.
+       value from the Affirming tier.
 
    7.  Else a Verifier MAY assign a 0.
 
