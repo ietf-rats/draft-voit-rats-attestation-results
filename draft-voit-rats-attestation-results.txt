@@ -5,14 +5,14 @@
 RATS Working Group                                               E. Voit
 Internet-Draft                                                     Cisco
 Intended status: Standards Track                             H. Birkholz
-Expires: 28 February 2022                                 Fraunhofer SIT
+Expires: 3 March 2022                                     Fraunhofer SIT
                                                              T. Hardjono
                                                                      MIT
                                                               T. Fossati
                                                              Arm Limited
                                                              V. Scarlata
                                                                    Intel
-                                                          27 August 2021
+                                                          30 August 2021
 
 
               Attestation Results for Secure Interactions
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 February 2022.
+   This Internet-Draft will expire on 3 March 2022.
 
 Copyright Notice
 
@@ -446,14 +446,17 @@ Table of Contents
    Trustworthiness Claims being relied upon from the Verifier considered
    the chain of trust for the Attesting Environment .
 
-   There are two categories of Verifier identities defined in this
-   document.  This list is extensible:
+   There are two catergorizations Verifier identities defined in this
+   document.
 
    *  verifier build: a unique instance of a software build running as a
       Verifier.
 
    *  verifier developer: the organizational unit responsible for a
       particular 'verifier build'.
+
+   Within each category, communicating the identity can be accomplished
+   via a variety of objects and encodings.
 
 2.2.3.  Communicating Identity
 
@@ -495,17 +498,17 @@ Table of Contents
 
    Trust is not absolute.  Trust is a belief in some aspect about an
    entity (in this case an Attester), and that this aspect is something
-   which can be depended upon (in this case by a Relying Party.)
-   Consequently, for these two meaningfully interact within the context
-   of Remote Attestation, a Verifier must be able to parse detailed
-   Evidence from an Attester and then assert different aspects
-   trustworthiness interpretable by a Relying Party.
+   which can be depended upon (in this case by a Relying Party.)  Within
+   the context of Remote Attestation, believability of this aspect is
+   facilitated by a Verifier.
+   This facilitation depends on the Verifier's ability to parse detailed
+   Evidence from an Attester and then to assert conclusions about this
+   aspect in a way interpretable by a Relying Party.
 
-   Specific claims for which a Verifier will assert trustworthiness have
-   been defined in this section.  These are known as Trustworthiness
-   Claims.  These claims have been designed to enable a common
-   understanding between a broad array of Attesters, Verifiers, and
-   Relying Parties.
+   Specific aspects for which a Verifier will assert trustworthiness are
+   defined in this section.  These are known as Trustworthiness Claims.
+   These claims have been designed to enable a common understanding
+   between a broad array of Attesters, Verifiers, and Relying Parties.
    The following set of design principles have been applied in the
    Trustworthiness Claim definitions:
 
@@ -518,9 +521,9 @@ Table of Contents
        language) to enable normalization across rich but incompatible
        Verifier object definitions.
 
-   2.  Each Trustworthiness Claim should enumerate only the specific
-       states that could viably result in a different outcome after the
-       Policy for Attestation Results has been applied.
+   2.  Each Trustworthiness Claim enumerates only the specific states
+       that could viably result in a different outcome after the Policy
+       for Attestation Results has been applied.
 
        Reason: by explicitly disallowing the standardization of
        enumerated states which cannot easily be connected to a use case,
@@ -698,7 +701,7 @@ Table of Contents
       64:  Attester hardware and/or firmware is recognized, but its
          trustworthiness is contraindicated.
 
-      65:  A Verifier does not recognize an Attester's hardware aor
+      65:  A Verifier does not recognize an Attester's hardware or
          firmware, but it should be recognized.
 
    instance-identity:  A Verifier has appraised an Attesting
