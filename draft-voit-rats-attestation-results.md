@@ -256,10 +256,12 @@ For more see {{claim-for-TEE-types}}.
 For the Verifier identity, it is critical for a Relying Party to review the certificate and chain of trust <!-- Henk(old): term not introduced, will have to introduce beforehand --> for that Verifier.
 Additionally, the Relying Party must have confidence that the Trustworthiness Claims being relied upon from the Verifier considered the chain of trust for the Attesting Environment <!-- Henk(old): more the reason to introduce the term -->.
 
-There are two categories of Verifier identities defined in this document.  This list is extensible:	
+There are two catergorizations Verifier identities defined in this document.    
 
 * verifier build: a unique instance of a software build running as a Verifier.	
 * verifier developer: the organizational unit responsible for a particular 'verifier build'.
+
+Within each category, communicating the identity can be accomplished via a variety of objects and encodings.
 
 ### Communicating Identity
 
@@ -284,9 +286,10 @@ For more on this, see {{freshness-section}}.
 ### Design Principles
 Trust is not absolute.
 Trust is a belief in some aspect about an entity (in this case an Attester), and that this aspect is something which can be depended upon (in this case by a Relying Party.)
-Consequently, for these two meaningfully interact within the context of Remote Attestation, a Verifier must be able to parse detailed Evidence from an Attester and then assert different aspects trustworthiness interpretable by a Relying Party.
+Within the context of Remote Attestation, believability of this aspect is facilitated by a Verifier.  
+This facilitation depends on the Verifier's ability to parse detailed Evidence from an Attester and then to assert conclusions about this aspect in a way interpretable by a Relying Party.
 
-Specific claims for which a Verifier will assert trustworthiness have been defined in this section.
+Specific aspects for which a Verifier will assert trustworthiness are defined in this section.
 These are known as Trustworthiness Claims.
 These claims have been designed to enable a common understanding between a broad array of Attesters, Verifiers, and Relying Parties.  
 The following set of design principles have been applied in the Trustworthiness Claim definitions:
@@ -295,7 +298,7 @@ The following set of design principles have been applied in the Trustworthiness 
 
    Reason: a plethora of similar Trustworthiness Claims will result in divergent choices made on which to support between different Verifiers.  This would place a lot of complexity in the Relying Party as it would be up to the Relying Party (and its policy language) to enable normalization across rich but incompatible Verifier object definitions.
 
-2. Each Trustworthiness Claim should enumerate only the specific states that could viably result in a different outcome after the Policy for Attestation Results has been applied.   
+2. Each Trustworthiness Claim enumerates only the specific states that could viably result in a different outcome after the Policy for Attestation Results has been applied.   
 
    Reason: by explicitly disallowing the standardization of enumerated states which cannot easily be connected to a use case, we avoid forcing implementers from making incompatible guesses on what these states might mean.  
 
@@ -347,7 +350,7 @@ In order to simplify design, only a single encoded value is asserted by a Verifi
 4. Else if applicable, a Verifier MUST assign a non-standardized value from the Warning tier.
 5. Else if applicable, a Verifier MUST assign a standardized value from the Affirming tier.    
 6. Else if applicable, a Verifier MUST assign a non-standardized value from the Affirming tier. 
-7. Else a Verifier MAY assign a 0.     
+7. Else a Verifier MAY assign a 0.         
 
 
 ### Specific Claims
@@ -423,7 +426,7 @@ hardware:
    : Attester hardware and/or firmware is recognized, but its trustworthiness is contraindicated.
    
    65:
-   : A Verifier does not recognize an Attester's hardware aor firmware, but it should be recognized.
+   : A Verifier does not recognize an Attester's hardware or firmware, but it should be recognized.
 
 instance-identity: 
 : A Verifier has appraised an Attesting Environment's unique identity based upon private key signed Evidence which can be correlated to a unique instantiated instance of the Attester.  (Note: this Trustworthiness Claim should only be generated if the Verifier actually expects to recognize the unique identity of the Attester.)
@@ -638,10 +641,8 @@ At minimum, this appraisal policy process must include the following:
     2. Use a local certificate to validate the signature (4.1).
     3. Verify that the hash from (4.3) matches (4.1)
     4. Use the identity of (2.1) to validate the signature of (4.3).
-    5. Failure of any steps (5.1) through (5.4) means the link does not meet minimum validation criteria, therefore appraise the link as having a null Verifier B Trustworthiness Vector.
-Jump to step (6.1).
-    6. When there is large or uncertain time gap between time(EG) and time(EG'), the link should be assigned a null Verifier B Trustworthiness Vector.
-Jump to step (6.1).
+    5. Failure of any steps (5.1) through (5.4) means the link does not meet minimum validation criteria, therefore appraise the link as having a null Verifier B Trustworthiness Vector. Jump to step (6.1).
+    6. When there is large or uncertain time gap between time(EG) and time(EG'), the link should be assigned a null Verifier B Trustworthiness Vector. Jump to step (6.1).
     7. Assemble the Verifier B Trustworthiness Vector
         1. Copy Verifier A Trustworthiness Vector to Verifier B Trustworthiness Vector
         2. Add implicit Trustworthiness Claims inherent to the type of TEE.
