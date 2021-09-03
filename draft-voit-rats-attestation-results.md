@@ -82,6 +82,7 @@ informative:
     title: "802.1AR: Secure Device Identity"
     date: 2018-08-02
   I-D.tschofenig-rats-psa-token: PSA
+  I-D.birkholz-rats-network-device-subscription: subscription
   US-Executive-Order:
     target: https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/12/executive-order-on-improving-the-nations-cybersecurity/
     title: "Executive Order on Improving the Nation's Cybersecurity"
@@ -574,7 +575,7 @@ Subsequent connection re-establishment will allow fresh new Trustworthiness Clai
 There are multiple ways of providing a Trustworthiness Vector to a Relying Party.
 This section describes two alternatives.
 
-## Background-Check retrieval 
+## Pure Background-Check retrieval 
 
 It is possible to for a Relying Party to follow the Background-Check Model defined in Section 5.2 of {{I-D.ietf-rats-architecture}}.
 In this case, a Relying Party will receive Attestation Results containing the Trustworthiness Vector directly from a Verifier.  
@@ -591,10 +592,11 @@ An implementer should examine these potential drawbacks before selecting this al
 
 ## Attestation Result Augmented Evidence
 
-There is another alternative for the establishment and maintenance of trustworthiness between an Attester and a Relying Party which is not adversely impacted by the potential drawbacks described above.
+There is a hybrid alternative for the establishment and maintenance of trustworthiness between an Attester and a Relying Party which is not adversely impacted by the potential drawbacks with pure background-check.
 In this alternative, a Verifier evaluates an Attester and returns signed Attestation Results back to this original Attester no less frequently than a well-known interval.
+This interval may also be asynchronous, based on the changing of certain Evidence as described in {{-subscription}}.
 
-When a Relying Party is to receive information about the Attester's trustworthiness, the Attesting Environment assembles the minimal incremental set of Evidence recently generated which can be used to verify that the Attester remains in the same state of trustworthiness. 
+When a Relying Party is to receive information about the Attester's trustworthiness, the Attesting Environment assembles the minimal set of Evidence which can be used to confirm or refute whether the Attester remains in the state of trustworthiness represented by the AR.
 To this Evidence, the Attesting Environment appends the signature from the most recent AR as well as a Relying Party Proof-of-Freshness.
 The Attesting Environment then signs the combination.
 
