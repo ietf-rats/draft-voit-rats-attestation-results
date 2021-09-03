@@ -65,10 +65,18 @@ informative:
     target: https://www.trustedcomputinggroup.org/wp-content/uploads/TPM_Keys_for_Platform_Identity_v1_0_r3_Final.pdf
     title: "TPM Keys for Platform Identity for TPM 1.2"
     date: 2015-08
+  SEV-SNP:
+    target:   https://www.amd.com/system/files/TechDocs/SEV-SNP-strengthening-vm-isolation-with-integrity-protection-and-more.pdf
+    title: "AMD SEV-SNP: Stregthening VM Isolation with Integrity Protection and More"
+    date: 2020
   SGX:
     target:   https://software.intel.com/content/dam/develop/external/us/en/documents/intel-sgx-support-for-third-party-attestation-801017.pdf
     title: "Supporting Third Party Attestation for Intel SGX with Intel Data Center Attestation Primitives"
     date: 2017
+  TDX:
+    target:   https://software.intel.com/content/dam/develop/external/us/en/documents/tdx-whitepaper-final9-17.pdf
+    title: "Intel Trust Domain Extensions"
+    date: 2020
   IEEE802.1AR:
     target: https://ieeexplore.ieee.org/document/8423794
     title: "802.1AR: Secure Device Identity"
@@ -105,8 +113,8 @@ Frequently, this action will be to choose whether to allow the Attester to secur
 When determining whether to allow secure interactions with an Attester, a Relying Party is challenged with a number of difficult problems which it must be able to handle successfully.
 These problems include:
 
-* What types of Attestation Results (AR) might a Relying Party be willing to trust from a specific type of Verifier?
-* What supplemental information must the Verifier need to include within Attestation Results to convince a Relying Party to allow interactions, or to apply policies to any connections, based on these Attestation Results?
+* What Attestation Results (AR) might a Relying Party be willing to trust from a specific Verifier?
+* What information does a Relying Party need before allowing interactions or choosing policies to apply to a connection?
 * What are the operating/environmental realities of the Attesting Environment where a Relying Party should only be able to associate a certain confidence regarding Attestation Results out of the Verifier?  (In other words, different types of Trusted Execution Environments (TEE) need not be treated as equivalent.)
 * How to make direct comparisons where there is a heterogeneous mix of Attesting Environments and Verifier types.
 
@@ -150,7 +158,7 @@ Trustworthiness Claim:
 : a specific quanta of trustworthiness which can be assigned by a Verifier based on its appraisal policy.
 
 Trustworthiness Tier:
-: a categorization of the levels of trustworthiness which may be assigned by a Verifier to a specific Trustworthiness Claim.  
+: a categorization of the levels of trustworthiness which may be assigned by a Verifier to a specific Trustworthiness Claim.
 These enumerated categories are: Affirmed, Warning, Contraindicated, and None.
 
 Trustworthiness Vector:
@@ -169,10 +177,10 @@ This section defines those information elements, and in some cases encodings for
 When the action is a communication establishment attempt with an Attester, there is only a limited set of actions which a Relying Party might take.
 These actions include:
 
-* Allow or deny information exchange with the Attester  (i.e., connectivity).
+* Allow or deny information exchange with the Attester.
 When there is a deny, reasons should be returned to the Attester.
-* Connect the Attester to a specific context within a Relying Party (e.g., a TEE, or Virtual Routing Function (VRF).)
-* Apply policies on the connection to or from the Attester (e.g., rate limits).
+* Establish a transport connection between an Attester and a specific context within a Relying Party (e.g., a TEE, or Virtual Routing Function (VRF).)
+* Apply policies on this connection (e.g., rate limits).
 
 There are three categories of information which must be conveyed to the Relying Party (which also is integrated with a Verifier) before it determines which of these actions to take.
 
@@ -193,18 +201,18 @@ Attester identities may then be acquired through signed communications with the 
 During the Remote Attestation process, the Verifier's identity will be established with a Relying Party via a Verifier signature across recent Attestation Results. 
 This Verifier identity could only have come from a key pair maintained by a trusted developer or operator of the Verifier.
 
-Additionally, each set of Attestation Results must be provably and non-reputably bound to the identity of the original Attesting Environment which was evaluated by the Verifier.  
+Additionally, each set of Attestation Results must be provably and non-reputably bound to the identity of the original Attesting Environment which was evaluated by the Verifier.
 This will be accomplished via two items.  
-First the Verifier signed Attestation Results MUST include sufficient Identity Evidence to ensure that this Attesting Environment signature refers to the same Attesting Environment appraised by the Verifier.  
-Second, where the passport model is used as a subsystem, a Attesting Environment signature which spans the Verifier signature which itself spans the Attester Identity and Attestation Results MUST also be included.  
-This restricts the viability of spoofing attacks.
+First the Verifier signed Attestation Results MUST include sufficient Identity Evidence to ensure that this Attesting Environment signature refers to the same Attesting Environment appraised by the Verifier.
+Second, where the passport model is used as a subsystem, an Attesting Environment signature which spans the Verifier signature MUST also be included.
+As the Verifier signature already spans the Attester Identity as well as the Attestation Results, this restricts the viability of spoofing attacks.
 
 In a subset of use cases, these two pieces of Identity Evidence may be sufficient for a Relying Party to successfully meet the criteria for its Appraisal Policy for Attestation Results.
-If the use case is a connection request, a Relying Party may simply then establish a transport session with an Attester after successfully appraising verified by a Verifier.
+If the use case is a connection request, a Relying Party may simply then establish a transport session with an Attester after a successful appraisal.
 However an Appraisal Policy for Attestation Results will often be more nuanced, and the Relying Party may need additional information.
 Some Identity Evidence related policy questions which the Relying Party may consider include:
 
-* Does the Relying Party only trust this Verifier to make Trustworthiness Claims on behalf a specific type of hardware rooted Attesting Environment?  Might a mix of Verifiers be necessary to cover all mandatory Trustworthiness Claims?
+* Does the Relying Party only trust this Verifier to make Trustworthiness Claims on behalf a specific type of Attesting Environment?  Might a mix of Verifiers be necessary to cover all mandatory Trustworthiness Claims?
 * Does the Relying Party only accept connections from a verified-authentic software build from a specific software developer?
 * Does the Relying Party only accept connections from specific preconfigured list of Attesters?
 
@@ -214,13 +222,13 @@ For any of these more nuanced appraisals, additional Identity Evidence or other 
 
 Per {{I-D.ietf-rats-architecture}} Figure 2, an Attester and a corresponding Attesting Environment might not share common code or even hardware boundaries.
 Consequently, an Attester implementation needs to ensure that any Evidence which originates from outside the Attesting Environment MUST have been collected and delivered securely before any Attesting Environment signing may occur.
-After the Verifier performs its appraisal, it will include sufficient information in Attestation Results to enable a Relying Party to have confidence that the Attester's trustworthiness is represented via Trustworthiness Claims signed by the appropriate Attesting Environment.
+After the Verifier performs its appraisal, it will include sufficient information in the Attestation Results to enable a Relying Party to have confidence that the Attester's trustworthiness is represented via Trustworthiness Claims signed by the appropriate Attesting Environment.
 
 This document recognizes three general categories of Attesters.
 
 1. HSM-based: A Hardware Security Module (HSM) based cryptoprocessor which continually hashes security measurements in a way which prevents an Attester from lying about measurements which have been extended into the Attesting Environment (e.g., TPM2.0.)
 2. Process-based: An individual process which has its runtime memory encrypted by an Attesting Environment in a way that no other processes can read and decrypt that memory (e.g., {{SGX}} or {{-PSA}}.)
-3. VM-based: An entire Guest VM (or a set of containers within a host) have been encrypted as a walled-garden unit by an Attesting Environment.  The result is that the host operating system cannot read and decrypt what is executing within that VM (e.g., SEV or TDX.)
+3. VM-based: An entire Guest VM (or a set of containers within a host) have been encrypted as a walled-garden unit by an Attesting Environment.  The result is that the host operating system cannot read and decrypt what is executing within that VM (e.g., {{SEV-SNP}} or {{TDX}}.)
 
 Each of these categories of Attesters above will be capable of generating Evidence which is protected using private keys / certificates which are not accessible outside of the corresponding Attesting Environment.
 The owner of these secrets is the owner of the identity which is bound within the Attesting Environment.
@@ -231,10 +239,9 @@ There are several types of Attester identities defined in this document.  This l
 
 * chip-vendor: the vendor of the hardware chip used for the Attesting Environment (e.g., a primary Endorsement Key from a TPM)
 * chip-hardware: specific hardware with specific firmware from an 'ae-vendor'
-* target-environment: a unique instance of a software build running in an Attester (e.g., MRENCLAVE {{SGX}}, an Instance ID {{-PSA}}, or a hash which represents a set of software loaded since boot (e.g., TPM based integrity verification.))
+* target-environment: a unique instance of a software build running in an Attester (e.g., MRENCLAVE {{SGX}}, an Instance ID {{-PSA}}, an Identity Block {{SEV-SNP}}, or a hash which represents a set of software loaded since boot (e.g., TPM based integrity verification.))
 * target-developer: the organizational unit responsible for a particular 'target-environment' (e.g., MRSIGNER {{SGX}})
 * instance: a unique instantiated instance of an Attesting Environment running on 'chip-hardware' (e.g., an LDevID {{IEEE802.1AR}})
-* (need to map SEV into above.)
 
 Based on the category of the Attesting Environment, different types of identities might be exposed by an Attester.
 
@@ -255,8 +262,8 @@ Consequently, the Relying Party SHOULD require Identity Evidence which indicates
 
 ### Verifier
 
-For the Verifier identity, it is critical for a Relying Party to review the certificate and chain of trust <!-- Henk(old): term not introduced, will have to introduce beforehand --> for that Verifier.
-Additionally, the Relying Party must have confidence that the Trustworthiness Claims being relied upon from the Verifier considered the chain of trust for the Attesting Environment <!-- Henk(old): more the reason to introduce the term -->.
+For the Verifier identity, it is critical for a Relying Party to review the certificate and chain of trust for that Verifier.
+Additionally, the Relying Party must have confidence that the Trustworthiness Claims being relied upon from the Verifier considered the chain of trust for the Attesting Environment.
 
 There are two catergorizations Verifier identities defined in this document.    
 
@@ -288,7 +295,7 @@ For more on this, see {{freshness-section}}.
 ### Design Principles
 Trust is not absolute.
 Trust is a belief in some aspect about an entity (in this case an Attester), and that this aspect is something which can be depended upon (in this case by a Relying Party.)
-Within the context of Remote Attestation, believability of this aspect is facilitated by a Verifier.  
+Within the context of Remote Attestation, believability of this aspect is facilitated by a Verifier.
 This facilitation depends on the Verifier's ability to parse detailed Evidence from an Attester and then to assert conclusions about this aspect in a way interpretable by a Relying Party.
 
 Specific aspects for which a Verifier will assert trustworthiness are defined in this section.
@@ -316,7 +323,7 @@ These design principles are important to keep the number of Verifier generated c
 
 ### Enumeration Encoding
 
-Per design principle (2), each Trustworthiness Claim will only expose specific encoded values.  
+Per design principle (2), each Trustworthiness Claim will only expose specific encoded values.
 To simplify the processing of these enumerations by the Relying Party, the enumeration will be encoded as a single signed 8 bit integer.  These value assignments for this integer will be in four Trustworthiness Tiers which follow these guidelines:
 
 Affirming: The Verifier affirms the Attester support for this aspect of trustworthiness
@@ -352,7 +359,7 @@ In order to simplify design, only a single encoded value is asserted by a Verifi
 4. Else if applicable, a Verifier MUST assign a non-standardized value from the Warning tier.
 5. Else if applicable, a Verifier MUST assign a standardized value from the Affirming tier.    
 6. Else if applicable, a Verifier MUST assign a non-standardized value from the Affirming tier. 
-7. Else a Verifier MAY assign a 0.         
+7. Else a Verifier MAY assign a 0 or -1.         
 
 
 ### Specific Claims
@@ -493,12 +500,12 @@ storage-opaque:
 
 It is possible for addtional Trustworthiness Claims and enumerated values to be defined in subsequent documents. 
 At the same time, the standardized Trustworthiness Claim values listed above have been designed so there is no overlap within a Trustworthiness Tier.
-As a result, it is possible to imagine a future where overlapping Trustworthiness Claims within a single Trustworthiness Tier may be defined.  
+As a result, it is possible to imagine a future where overlapping Trustworthiness Claims within a single Trustworthiness Tier may be defined.
 Wherever possible, the Verifier SHOULD assign the best fitting standardized value.
 
 Where a Relying Party doesn't know how to handle a particular Trustworthiness Claim, it MAY choose an appropriate action based on the Trustworthiness Tier under which the enumerated value fits. 
 
-It is up to the Verifier to publish the types of evaluations it performs when determining how Trustworthiness Claims are derived for a type of any particular type of Attester.   
+It is up to the Verifier to publish the types of evaluations it performs when determining how Trustworthiness Claims are derived for a type of any particular type of Attester.
 It is out of the scope of this document for the Verifier to provide proof or specific logic on how a particular Trustworthiness Claim which it is asserting was derived.
 
 
@@ -560,12 +567,17 @@ An implementer should examine these potential drawbacks before selecting this al
 
 ## Attestation Result Augmented Evidence
 
-There is another alternative for the establishment and maintenance of a connection between an Attester and a Relying Party which is not adversely impacted by the potential drawbacks described above.
+There is another alternative for the establishment and maintenance of trustworthiness between an Attester and a Relying Party which is not adversely impacted by the potential drawbacks described above.
 In this alternative, a Verifier evaluates an Attester and returns signed Attestation Results back to this original Attester no less frequently than a well-known interval.
-When a Relying Party wants to understand the Attester's trustworthiness, the Attesting Environment assembles the minimal set of Evidence recently generated which can be used to verify that the Attester remains in the same state of trustworthiness. 
-The Attesting Environment then appends the signature from the most recent AR as well as a Relying Party Proof-of-Freshness, and then signs the combination.
-This combination plus the most recent AR are then sent to the Relying Party as independently signed but semantically bound sets of Evidence.
-The Relying Party then can appraise these sets of Evidence by applying an Appraisal Policy for Attestation Results.
+
+When a Relying Party is to receive information about the Attester's trustworthiness, the Attesting Environment assembles the minimal incremental set of Evidence recently generated which can be used to verify that the Attester remains in the same state of trustworthiness. 
+To this Evidence, the Attesting Environment appends the signature from the most recent AR as well as a Relying Party Proof-of-Freshness.
+The Attesting Environment then signs the combination.
+
+The Attester then assembles AR Augmented Evidence by taking the signed combination and appending the full AR. The assembly now consists of two independent but semantically bound sets of signed Evidence.  
+
+The AR Augmented Evidence is then sent to the Relying Party.
+The Relying Party then can appraise these semantically bound sets of signed Evidence by applying an Appraisal Policy for Attestation Results as described below.
 This policy will consider both the AR as well as additional information about the Attester within the AR Augmented Evidence the when determining what action to take.
 
 This alternative combines the {{I-D.ietf-rats-architecture}} Sections 5.1 Passport Model and Section 5.2 Background-Check Model.
@@ -574,7 +586,7 @@ The flows within this combined model are mapped to {{I-D.ietf-rats-architecture}
 "Verifier A" below corresponds to the "Verifier" Figure 5 within {{I-D.ietf-rats-architecture}}.
 And "Relying Party/Verifier B" below corresponds to the union of the "Relying Party" and "Verifier" boxes within Figure 6 of {{I-D.ietf-rats-architecture}}. 
 This union is possible because Verifier B can be implemented as a simple, self-contained process.
-The resulting combined process can appraise both the Attestation Result parts as well as the Evidence parts of AR-augmented Evidence to determine whether an Attester qualifies for secure interactions with the Relying Party's resources.
+The resulting combined process can appraise the AR-augmented Evidence to determine whether an Attester qualifies for secure interactions with the Relying Party.
 The specific steps of this process are defined later in this section.
 
 ~~~
