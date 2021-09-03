@@ -383,7 +383,10 @@ configuration:
    
    96:
    : The configuration is unsupportable as it exposes unacceptable security vulnerabilities
-
+   
+   -1:
+   : Unexpected error
+   
 executables:
 : A Verifier has appraised and evaluated relevant runtime files, scripts, and/or other objects which have been loaded into the Target environment's memory.
 
@@ -405,6 +408,9 @@ executables:
    96:
    : Runtime memory includes executables, scripts, files, and/or object which are contraindicated.
 
+   -1:
+   : Unexpected error
+   
 file-system:
 :  A Verifier has evaluated the Attester's file system.
 
@@ -420,6 +426,9 @@ file-system:
    96:
    : The file system includes contraindicated executables, scripts, or files 
 
+   -1:
+   : Unexpected error
+   
 hardware:
 : A Verifier has appraised any Attester hardware and firmware which are able to expose fingerprints of their identity and running code.
 
@@ -437,6 +446,9 @@ hardware:
    97:
    : A Verifier does not recognize an Attester's hardware or firmware, but it should be recognized.
 
+   -1:
+   : Unexpected error
+   
 instance-identity: 
 : A Verifier has appraised an Attesting Environment's unique identity based upon private key signed Evidence which can be correlated to a unique instantiated instance of the Attester.  (Note: this Trustworthiness Claim should only be generated if the Verifier actually expects to recognize the unique identity of the Attester.)
 
@@ -452,6 +464,9 @@ instance-identity:
    97:
    : The Attesting Environment is not recognized; however the Verifier believes it should be.
 
+   -1:
+   : Unexpected error
+   
 runtime-opaque: 
 : A Verifier has appraised the visibility of Attester objects in memory from perspectives outside the Attester.
 
@@ -466,7 +481,10 @@ runtime-opaque:
    
    96:
    : The Verifier has concluded that in memory objects are unacceptably visible within the physical host that supports the Attester.
- 
+
+   -1:
+   : Unexpected error
+    
 sourced-data:
 : A Verifier has evaluated of the integrity of data objects from external systems used by the Attester.
 
@@ -482,6 +500,9 @@ sourced-data:
    96:
    : Attester source data objects come from contraindicated sources.
 
+   -1:
+   : Unexpected error
+   
 storage-opaque:
 : A Verifier has appraised that an Attester is capable of encrypting persistent storage. (Note: Protections must meet the capabilities of {{OMTP-ATE}} Section 5, but need not be hardware tamper resistant.)
 
@@ -496,7 +517,10 @@ storage-opaque:
 
    96:
    : There are persistent secrets which are stored unencrypted in an Attester.
-     
+ 
+   -1:
+   : Unexpected error
+    
 
 It is possible for addtional Trustworthiness Claims and enumerated values to be defined in subsequent documents. 
 At the same time, the standardized Trustworthiness Claim values listed above have been designed so there is no overlap within a Trustworthiness Tier.
