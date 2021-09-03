@@ -266,7 +266,7 @@ Consequently, the Relying Party SHOULD require Identity Evidence which indicates
 For the Verifier identity, it is critical for a Relying Party to review the certificate and chain of trust for that Verifier.
 Additionally, the Relying Party must have confidence that the Trustworthiness Claims being relied upon from the Verifier considered the chain of trust for the Attesting Environment.
 
-There are two catergorizations Verifier identities defined in this document.    
+There are two categorizations Verifier identities defined in this document.    
 
 * verifier build: a unique instance of a software build running as a Verifier.	
 * verifier developer: the organizational unit responsible for a particular 'verifier build'.
@@ -523,7 +523,7 @@ storage-opaque:
    : Unexpected error
     
 
-It is possible for addtional Trustworthiness Claims and enumerated values to be defined in subsequent documents. 
+It is possible for additonal Trustworthiness Claims and enumerated values to be defined in subsequent documents. 
 At the same time, the standardized Trustworthiness Claim values listed above have been designed so there is no overlap within a Trustworthiness Tier.
 As a result, it is possible to imagine a future where overlapping Trustworthiness Claims within a single Trustworthiness Tier may be defined.
 Wherever possible, the Verifier SHOULD assign the best fitting standardized value.
