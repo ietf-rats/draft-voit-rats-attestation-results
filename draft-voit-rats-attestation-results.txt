@@ -439,7 +439,7 @@ Table of Contents
    Trustworthiness Claims being relied upon from the Verifier considered
    the chain of trust for the Attesting Environment.
 
-   There are two catergorizations Verifier identities defined in this
+   There are two categorizations Verifier identities defined in this
    document.
 
    *  verifier build: a unique instance of a software build running as a
@@ -788,7 +788,7 @@ Table of Contents
 
       -1:  Unexpected error
 
-   It is possible for addtional Trustworthiness Claims and enumerated
+   It is possible for additonal Trustworthiness Claims and enumerated
    values to be defined in subsequent documents.  At the same time, the
    standardized Trustworthiness Claim values listed above have been
    designed so there is no overlap within a Trustworthiness Tier.  As a
